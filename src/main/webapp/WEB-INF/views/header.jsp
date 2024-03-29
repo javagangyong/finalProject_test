@@ -697,50 +697,15 @@ h1, h2 {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	box-shadow: 1px 1px 15px${login.gender== '남성'? 'hotpink': 'skyblue'
+	box-shadow: 1px 1px 15px${login.gender== '남성'? 'hotpink': 'skyblue';
+	border-radius: 15px;
+	width: 35%;
+	height: 0px;
+	z-index: 5;
+	transition-duration: 1.2s;
+	overflow-y: hidden;
 }
-
-;
-border-radius
-:
  
-15
-px
-;
-
-      
-width
-:
- 
-35%;
-height
-:
- 
-0
-px
-;
-
-      
-z-index
-:
- 
-5;
-transition-duration
-:
- 
-1
-.2s
-;
-
-      
-overflow-y
-:
- 
-hidden
-;
-
-   
-}
 #ch_oponent_profile>div {
 	width: 100%;
 	height: 50%;
@@ -805,21 +770,8 @@ hidden
 	word-wrap: break-word;
 	box-sizing: border-box;
 	border-radius: 15px;
-	box-shadow: 1px 1px 40px${login.gender== '남성'? 'hotpink': 'skyblue'
-}
-
-inset
-;
-
-      
-padding
-:
- 
-10
-px
-;
-
-   
+	box-shadow: 1px 1px 40px${login.gender== '남성'? 'hotpink': 'skyblue' inset;
+	padding: 10px;
 }
 .ch_bg_women {
 	background-color: rgba(242, 140, 191, 0.4);
@@ -958,6 +910,7 @@ px
 		// 로그인 중인 유저 확인
 		var user = '${login.userid}'
 		var username = '${login.username}'
+		var gender = '${login.gender}'
 		var cpath = '${cpath}'
 		const sockJS = new SockJS(cpath + '/endpoint') // WebSocket 엔드포인트 설정
 		const stomp = Stomp.over(sockJS)
