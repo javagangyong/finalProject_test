@@ -14,7 +14,7 @@
 		(select username from member where c.receiveuser = member.userid) as receiveUser,
 		c.sendUser as sendUserID,
 		c.receiveUser as receiveUserID,
-		c.text, TO_CHAR(c.sendtime, 'yyyy/MM/dd-AM hh:mm') AS sendTime, d.profile 
+		c.text, TO_CHAR(c.sendtime, 'yyyy/MM/dd-AM hh:mi') AS sendTime, d.profile 
 		FROM chatting c
 		JOIN condition d ON c.sendUser = d.userid
 		WHERE (c.sendUser = #{reqUser} AND c.receiveUser = #{respUser})

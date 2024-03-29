@@ -197,22 +197,46 @@ async function chatListLoadHandler() {
 		room += 	'<div class="messageArea" roomname="' + roomName +'">'
 		
 		// 불러온 채팅 목록을 미리 채팅방에 추가
-		chatList.forEach(chat => {
-			let str = ''
-			
-			str += '<div class="' + (chat.sendUserId == user ? 'rightMsg' : 'leftMsg') + '">'
-			str += '<label class="' + (chat.sendUserId == user ? 'hidden' : '' ) + '" id="oponent">'
-			let profileURL = cpath + '/upload/' + chat.profile
-			str += '<span id="oponent_profile" style="background-image: url(\'' + profileURL +'\')"></span>'
-			str += '<span style="font-size: 12px;">' + chat.sendUser + '</span>'
-			str += '</label>'
-			str += '<div>'
-			str += '<span style="font-size: 12px;">' + chat.text + '</span>'
-			str += '<br><sub>' + chat.sendTime.split("-")[1] + '</sub>'
-			str += '</div>'
-			str += '</div>'
-			room += str
-		})
+		let previousSendTime = null; // 이전 채팅의 sendTime을 저장하기 위한 변수
+		let previousUser = null;	 // 이전 채팅을 보낸 유저를 저장하기 위한 변수
+		for (let i = 0; i < chatList.length; i++) {
+		    const chat = chatList[i];				
+		    const currentSendTime = chat.sendTime;	 // 현재 요소(채팅)의 전송 시간
+		    const currentSendUser = chat.sendUserId; // 현재 요소(채팅)을 보낸 사람
+		    let who = chat.sendUserId == user ? 'rightMsg' : 'leftMsg' // 보낸 사람이 로그인 중인 유저와 같으면 오른쪽에 표시, 다르면 왼쪽에 표시
+		    	
+		    // 채팅 생성	
+		    let str = '';
+		    str += '<div class="' + who + '">';
+		    str += '<label class="' + (chat.sendUserId == user ? 'hidden' : '') + '" id="oponent">'; // 프로필 사진과 이름을 표시하기 위한 라벨, 보낸 사람이 자신일때는 숨김
+		    let profileURL = cpath + '/upload/' + chat.profile;
+		    
+		    if(currentSendTime != previousSendTime || previousUser != currentSendUser) {	// 이전 채팅의 전송 시간과 현재 채팅의 전송 시간이 다르거나
+		    																				// 이전 채팅을 보낸 사람과 현재 채팅을 보낸 사람이 다르면
+		    																				// 프로필 사진 표시
+		    	str += '<span id="oponent_profile" style="background-image: url(\'' + profileURL + '\')"></span>';
+		    	str += '<span style="font-size: 12px;">' + chat.sendUser + '</span>';
+		    }
+		    str += '</label>';
+		    str += '<div>';
+		    str += '<span style="font-size: 12px;">' + chat.text + '</span>';
+		    
+		    if(i < chatList.length - 1 && chatList[i + 1].sendUserId != currentSendUser) { // 다음 채팅을 전송한 사람과 현재 채팅을 전송한 사람이 다르면 시간 표시
+		    	str += '<br><sub>' + chat.sendTime.split("-")[1] + '</sub>';
+		    }
+		    if (i < chatList.length - 1 && chatList[i + 1].sendTime != currentSendTime) { // 다음 채팅의 전송 시간과 현재 채팅의 전송 시간이 다르면 시간 표시
+		    	str += '<br><sub>' + chat.sendTime.split("-")[1] + '</sub>';
+		    }
+		    if(i === chatList.length - 1) {	// 마지막 채팅이라면 시간 표시
+		    	str += '<br><sub>' + chat.sendTime.split("-")[1] + '</sub>';
+		    }
+		    str += '</div>';
+		    str += '</div>';
+		    room += str;
+		    
+		    previousSendTime = currentSendTime
+		    previousUser = currentSendUser
+		}
 		
 		
 		room += 	'</div>'

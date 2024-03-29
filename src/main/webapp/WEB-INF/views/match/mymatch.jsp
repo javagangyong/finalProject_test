@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp" %>
+<script src="${cpath }/resources/js/mymatch.js"></script>
 <style>
 	.matchingList {
 		display: flex;
@@ -88,7 +89,7 @@
 		transform: translate(-50%, -50%);
 		box-shadow: 1px 1px 15px ${login.gender == '남성' ? 'hotpink' : 'skyblue'};
 		border-radius: 15px;
-		width: 600px;
+		width: 35%;
 		height: 0px;
 		z-index: 5;
 		transition-duration: 1.2s;
@@ -115,7 +116,7 @@
 		left: 50%;
 		transform: translate(-50%, -50%);
 		border-radius: 15px;
-		width: 600px;
+		width: 35%;
 		height: 0px;
 		background-color: white;
 		z-index: 4;
@@ -123,7 +124,7 @@
 	}
 	
 	.ch_height_toggle {
-		height: 750px !important;
+		height: 75% !important;
 	}
 	
 	#ch_profile_close {
@@ -203,8 +204,8 @@
 						${match.matched == 0 ? '매칭 대기' : (match.matched == 1 ? '매칭중' : (match.matched == 2 ? '매칭거부' : '매칭종료')) }
 					</span>
 					<span class="ch_match_btns ${match.matched != 0 or match.reqUser == login.userid ? 'hidden' : '' }">
-						<a href="${cpath }/match/accept?reqUser=${match.reqUser}"><button>수락</button></a>
-						<a href="${cpath }/match/deny?reqUser=${match.reqUser}"><button>거절</button></a>
+						<a value="${match.reqUser }" href="${cpath }/match/accept?reqUser=${match.reqUser}"><button class="accept">수락</button></a>
+						<a value="${match.reqUser }" href="${cpath }/match/deny?reqUser=${match.reqUser}"><button class="deny">거절</button></a>
 					</span>
 				</li>
 			</ul>
@@ -217,73 +218,23 @@
 </div>
 
 <div id="ch_profile_overlay">
-
-</div>
-
 <script>
-	function profileToggle() {
-	    const profile = document.getElementById('ch_oponent_profile')
-	    const overlay = document.getElementById('ch_profile_overlay')
-	    profile.classList.toggle('ch_height_toggle')
-	    overlay.classList.toggle('ch_height_toggle')
-	}
-
-	async function ChProfileLoadHandler(event) {
-		let oponent = event.target.value
-		const profile = document.getElementById('ch_oponent_profile')
-		const url = cpath + '/matchAjax/userInfo/' + oponent
-		const info = await fetch(url).then(resp => resp.json())
-		let year = new Date()
-		profile.innerHTML = ''
-		let profileURL = cpath + '/upload/' + info.profile
-		let tag = ''
-		tag += '<div id="ch_oponent_img">'
-		tag += 		'<div style="margin-top: 15px; background-image: url(\'' + profileURL +'\')">'
-		tag += 		'</div>'
-		tag += '</div>'
-		tag += '<div id="ch_oponent_detail">'
-		tag += 		'<p>' + info.username + ' (' + (year.getFullYear() - info.birthYear + 1) + ' 세)' + '</p>'
-		tag +=		'<p>' + info.birthYear + '년 ' + info.birthMonth + '월 ' + info.birthDay + '일생' + '</p>'
-		tag +=		'<p>결혼여부 : ' + (info.marriedCount == 0 ? '없음' : (info.marreidCount == 1 ? '1회 있음' : '2회 이상') ) + '</p>'
-		tag +=		'<p>거주지역 : ' + info.residence + '</p>'
-		tag +=		'<p>직업 : ' + info.job + '</p>'
+	const matching = '${matching}'
 		
-		const salarys = {
-				"2999" : "3000만원 이하",
-				"3000" : "3천만원대",
-				"4000" : "4천만원대",
-				"5000" : "5천이상 ~ 1억원 이하",
-				"10000" : "1억원 이상"
-		}
-		
-		tag +=		'<p>연봉 : ' + salarys[info.salary] + '</p>'
-		tag +=		'<p>종교 : ' + info.religion + '</p>'
-		tag +=		'<p style="font-size: 20px; margin-top: 10px;">자기소개</p>'
-		tag	+=		'<pre>' + info.introduce + '</pre>'
-		tag += '</div>'
-		tag += '<button id="ch_profile_close">닫기</button>'
-		
-		
-		
-		profile.innerHTML = tag
-		profileToggle()
-		const profileCloseBtn = document.getElementById('ch_profile_close')
-	    profileCloseBtn.onclick = profileToggle
-	}
+	document.addEventListener('DOMContentLoaded', function() {
+		const denyBtns = document.querySelectorAll('.deny')
+		denyBtns.forEach(btn => btn.onclick = denyHandler)
+	})
 	
-	function showMatchSuccess() {		
-		if('${matching}' != '') {
-		    Swal.fire({
-		        title: '매칭성사',
-		        html: '상대방과의 매칭이 성사되어 채팅방이 열렸습니다! <br>우측 하단의 채팅 아이콘을 눌러보세요~',
-		        icon: 'success',
-		        confirmButtonText: '확인'
-		    });
-		}
-	}
+	document.addEventListener('DOMContentLoaded', function() {
+		const acceptBtns = document.querySelectorAll('.accept')
+		acceptBtns.forEach(btn => btn.onclick = acceptHandler)
+	})
 	
-    document.addEventListener('DOMContentLoaded', showMatchSuccess)
-    
+	document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(showMatchSuccess, 500)
+	})
 </script>
+</div>
 </body>
 </html>

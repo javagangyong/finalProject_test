@@ -35,7 +35,6 @@
 		const text = content.text
 		const room = document.querySelector('.room[roomname="' + roomName + '"]')
 		const messageArea = document.querySelector('.messageArea[roomname="' + roomName +'"]')
-		
 		// 상대방과 매칭 종료시
 		if(text == '매칭종료') {
 			if(room.classList.contains('hidden')) {
@@ -43,7 +42,7 @@
 				const alarmBtn = talkAlarm.children[1].children[0]
 				alarmBtn.setAttribute('roomname', roomName)
 				let content = ''
-				content +=   '<div id="ch_matching_end">' + content.userid +'님이 매칭을 종료하셨습니다.</div>'
+				content +=   '<div id="ch_matching_end">' + from + '님이 매칭을 종료하셨습니다.</div>'
 				talkAlarm.children[0].innerHTML = content
 				talkAlarm.style.zIndex = 10
 				talkAlarm.style.opacity = 1
@@ -55,11 +54,6 @@
 			stomp.unsubscribe('/broker/chat/' + roomName)
 			return;
 		}
-		
-		
-		
-
-		
 		// 현재 상대방과의 채팅방이 숨김 상태일때 알림 표시
 		if(room.classList.contains('hidden')) {
 			const talkAlarm = document.querySelector('.talkAlarm')
@@ -73,14 +67,34 @@
 			talkAlarm.style.opacity = 1
 		}
 		
-		
-
+		let who = (from == username ? 'rightMsg' : 'leftMsg')
+		let finalMsg = messageArea.lastElementChild
+		if(finalMsg == null) {
+			finalMsg = document.createElement('div')
+		}
 		let str = ''
-		str += '<div class="' + (from == username ? 'rightMsg' : 'leftMsg')
-				+ '">'
+		str += '<div class="' + who
+				+ '" dir="' + who + '">'
  	    str += '<label class="' + (from == username ? 'hidden' : '') + '" id="oponent">'
-		str += '<span id="oponent_profile" style="background-image: url(\'' + profileUrl + '\')"></span>'
-		str += '<span style="font-size: 12px;">' + from + '</span>'
+ 
+ 	    if(messageArea.childElementCount == 0) { 	    	
+ 	    	str += '<span id="oponent_profile" style="background-image: url(\'' + profileUrl + '\')"></span>'
+ 	    	str += '<span style="font-size: 12px;">' + from + '</span>'
+ 	    }
+ 	    else if(who == finalMsg.getAttribute('dir') && finalMsg.querySelector('sub').innerText != content.time) {
+ 	    	str += '<span id="oponent_profile" style="background-image: url(\'' + profileUrl + '\')"></span>'
+ 	    	str += '<span style="font-size: 12px;">' + from + '</span>'
+ 	    	
+ 	    }
+ 	    else if(who != finalMsg.getAttribute('dir')) {
+ 	    	str += '<span id="oponent_profile" style="background-image: url(\'' + profileUrl + '\')"></span>'
+ 	    	str += '<span style="font-size: 12px;">' + from + '</span>'
+ 	    }
+		
+	    if(who == finalMsg.getAttribute('dir') && finalMsg.querySelector('sub').innerText == content.time) {
+ 	    	finalMsg.children[1].children[2].remove()
+ 	    }
+		
 		str += '</label>'
 		str += '<div>'
 		str += '<span style="font-size: 12px;">' + text + '</span>'
