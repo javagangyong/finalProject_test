@@ -13,6 +13,7 @@ table#tableReport td {
 	margin: 10px;
 	border-bottom: 1px dashed lightgrey;
 	text-align: center;
+	padding: 5px;
 }
 
 table#tableReport th {
@@ -23,10 +24,15 @@ table#tableReport th {
 table#tableReport>tr>td {
 	width: 10px;
 }
+table#tableReport>tr {
+	height: auto;
+}
+
 
 div.tablePosition {
 	position: relative;
-	top: 150px;
+	top: 200px;
+/* 	z-index: 1; */
 }
 
 div.tablePosition>h2 {
@@ -34,10 +40,9 @@ div.tablePosition>h2 {
 }
 
 .buttons {
-	position: relative;
-	top: 215px;
-	left: 193px;
-	z-index: 1;
+ 	position: absolute;
+     top: 48%;
+     left: 76%;
 }
 
 #modalReport>.contentReport {
@@ -121,6 +126,56 @@ div.tablePosition>h2 {
 	width: 400px;
 	height: 550px;
 }
+
+#open {
+ 	border: white;
+ 	width: 80px;
+ 	background-color: #105dae;
+    color: white;
+ 	padding: 5px 10px;
+ 	font-size: 14px;
+ 	font-weight: 500;
+ 	border-radius: 5px;
+ 	position: absolute;
+    left: 193%;
+    top: 22%;
+ }
+ #reportListTitle{
+ 	position: absolute;
+ 	top: -70%;
+    left: 41%;
+ 	
+ }
+ #reportListTitle > h2 {
+ 	margin: auto;
+ }
+ .modifyReport,
+ .deleteReport {
+ 	width: 40px;
+ 	background-color: white;
+ 	color: #105dae;
+ 	font-size: 14px;
+ 	padding: 3px;
+ 	border: 1px solid #105dae;
+ 	border-radius: 10px;
+ 	
+ }
+#reportList td:nth-child(1) {
+  width: 15%;
+} 
+#reportList td:nth-child(2) {
+  width: 25%;
+} 
+#reportList td:nth-child(3) {
+  width: 25%;
+} 
+#reportList td:nth-child(4) {
+  width: 20%;
+} 
+#reportList td:nth-child(5) {
+  width: 15%;
+} 
+
 </style>
 
 <div id="modalReport" class="hidden">
@@ -148,10 +203,9 @@ div.tablePosition>h2 {
 <div id="modalReportModify" class="hidden">
 </div>
 
-<div class="buttons">
-	<button id="open">신고하기</button>
-</div>
-
+<!-- <div class="buttons" id="reportBtnDiv"> -->
+<!-- 	<button id="open">신고하기</button> -->
+<!-- </div> -->
 <div class="tablePosition" id="reportList"></div>
 
 <script>
@@ -168,7 +222,10 @@ div.tablePosition>h2 {
 		    let tag = '';
 		    
 		    tag += '<table id="tableReport">';
-		    tag += '    <h2>📌 ${login.userid}님의 신고</h2>';
+		    tag += '	<div id="reportListTitle">';
+		    tag += '    	<h2>🚨 ${login.userid}님의 신고 🚨</h2>';
+		    tag += '		<button id="open">신고하기</button>';
+		    tag += '	</div>';
 		    tag += '    <thead>';
 		    tag += '        <tr>';
 		    tag += '            <th>번호</th>';
@@ -183,7 +240,7 @@ div.tablePosition>h2 {
 			for(let i = 0; i < list.length; i++) {
 					const dto = list[i]		
 			
-			        tag += '    <tr>';
+					tag += '    <tr>';
 			        tag += '        <td>' + dto.idx + '</td>';
 			        tag += '        <td>' + dto.reporter + '</td>';
 			        tag += '        <td>';
@@ -196,8 +253,11 @@ div.tablePosition>h2 {
 			        tag += '            </div>';
 			        tag += '        </td>';
 			        tag += '        <td>' 
-			        				+ (dto.processed == '0' ? '처리중 <button idx=\"' + dto.idx + '\"class="modifyReport">수정</button> <button idx=\"' + dto.idx + '\"class="deleteReport">삭제</button>' : '처리완료') + 
+			        				+ (dto.processed == '0' ? '처리중' : '처리완료') + 
 			        				'</td>';
+			        tag += '		<td>'
+			        tag += '		<button idx=\"' + dto.idx + '\"class="modifyReport">수정</button> <button idx=\"' + dto.idx + '\"class="deleteReport">삭제</button>';
+			        tag += '		</td>'
 			        tag += '    </tr>';
 					const replyUrl = '${cpath}/reportAjax/reportReply?idx=' + dto.idx
 					const reportReply = await fetch(replyUrl).then(resp => resp.json())
@@ -300,7 +360,13 @@ div.tablePosition>h2 {
 					})
 				})
 			
-			
+			const modalReport = document.getElementById('modalReport')
+			const btns = [
+			document.getElementById('open'),
+			document.getElementById('close'),
+			document.querySelector('div.overlay'),
+			]
+			btns.forEach(b => b.onclick = event => modalReport.classList.toggle('hidden'))
 
 			
 		
@@ -310,13 +376,7 @@ div.tablePosition>h2 {
 		
 		
 		
-	const modalReport = document.getElementById('modalReport')
-	const btns = [
-		document.getElementById('open'),
-		document.getElementById('close'),
-		document.querySelector('div.overlay'),
-	]
-	btns.forEach(b => b.onclick = event => modalReport.classList.toggle('hidden'))
+
 	
 	
 		

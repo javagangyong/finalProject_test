@@ -122,7 +122,11 @@ textarea[name="content"] {
 #mfAndDel {
 	display: flex;
 }
+#marriageViewContent{
+	width: 700px;
+	margin: 60px auto;
 
+}
 
 </style>
 
@@ -149,7 +153,7 @@ textarea[name="content"] {
 		</div>
 		<div style="text-align: center;">
 			<div id="marriageReviewImg"></div>
-			<div>${dto.content }</div>
+			<div id="marriageViewContent">${dto.content }</div>
 		</div>
 		<button id="reviewBtn">목록보기</button>
 		
