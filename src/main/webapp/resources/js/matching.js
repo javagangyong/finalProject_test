@@ -1,51 +1,87 @@
+
+function profileToggle() {
+    const profile = document.getElementById('ch_oponent_profile')
+    const overlay = document.getElementById('ch_profile_overlay')
+    const reqUseroverlay = document.getElementById('reqUseroverlay')
+    profile.classList.toggle('ch_height_toggle')
+    overlay.classList.toggle('ch_height_toggle')
+    reqUseroverlay.classList.toggle('hidden')
+}
+
+
 async function onReceive(chat) {
    const content = JSON.parse(chat.body)
    const text = content.text
    const userid = content.from
    const respUser = content.to
            
+  if (text.includes('수락')) {
+      swal.fire({
+         title: '매칭성사',
+         text: userid + '님이 매칭을 수락하셨습니다! 채팅창을 확인해보세요~',
+         icon: 'success',
+         confirmButtonText: '확인'
+      }).then((result) => {
+          if (result.isConfirmed) {
+              location.reload();
+          }
+      return 
+   })
    if (text.includes('거부')) {
-   		return alert(text)
+      swal.fire({
+         title: '매칭거부됨',
+         text: userid + '님이 매칭을 거부하셨습니다 ㅠ-ㅠ',
+         icon: 'error',
+         confirmButtonText: '닫기'
+      })
+      return 
    }
            
-  const reqUserInfo = document.querySelector('.reqUserInfo')
   const reqUseroverlay = document.querySelector('.reqUseroverlay')
+  const profile = document.getElementById('ch_oponent_profile')
 
 
   const url = cpath + '/matchAjax/userInfo/' + userid
-  const dto = await fetch(url).then(resp => resp.json())
-  
-  let tag = '';
-  tag += '	<h2 class="userRequest">'+ text +'</h2>'
-  tag += '   <div class="reqUserSb">'
-  tag += '      <div class="leftProfile">'
-  tag += '         <div>이름 : ' + dto.username + '</div>'
-  tag += '         <div>' + dto.birthYear + '년' + dto.birthMonth + '월' + dto.birthDay + '일생</div>'
-  tag += '         <div>키 : ' + dto.height + '</div>'
-  tag += '         <div>직업 : ' + dto.job + '</div>'
-  tag += '         <div>학벌 : ' + dto.education + '</div>'
-  tag += '         <div>자가 보유 : ' + dto.estate + '</div>'
-  tag += '         <div>자차 보유 : ' + dto.owncar + '</div>'
-  tag += '         <div>거주지 : ' + dto.residence + '</div>'
-  tag += '         <div>연봉 : ' + dto.salary + '</div>'
-  tag += '         <div>종교 : ' + dto.religion + '</div>'
-  tag += '         <div>과거 결혼 여부 : ' + dto.marriedCount + '</div>'
-  tag += '      </div>'
-  const reqUserImgUrl = cpath + '/upload/' + dto.profile
-  tag += '      <div class="reqUserImg" style="background-image: url(\'' + reqUserImgUrl + '\');\"></div>'
-  tag += '   </div>'
-  tag += '   <div>자기소개 : ' + dto.introduce + '</div>' 
-  tag += '	 <div class="tryMatchSb">'
-  tag += '   	<div class="consent">수락</div>'  		
-  tag += '   	<div class="refuse">거절</div>'  		
-  tag += '   	<div class="defer">보류</div>'  
-  tag += '	 </div>'		
+  const info = await fetch(url).then(resp => resp.json())
+      
+  	let year = new Date()
+	profile.innerHTML = ''
+	let profileURL = cpath + '/upload/' + info.profile
+	let tag = ''
+	tag += '<div id="ch_oponent_img">'
+	tag += 		'<div style="margin-top: 15px; background-image: url(\'' + profileURL +'\')">'
+	tag += 		'</div>'
+	tag += '</div>'
+	tag += '<div id="ch_oponent_detail">'
+	tag += 		'<p>' + info.username + ' (' + (year.getFullYear() - info.birthYear + 1) + ' 세)' + '</p>'
+	tag +=		'<p>' + info.birthYear + '년 ' + info.birthMonth + '월 ' + info.birthDay + '일생' + '</p>'
+	tag +=		'<p>결혼여부 : ' + (info.marriedCount == 0 ? '없음' : (info.marreidCount == 1 ? '1회 있음' : '2회 이상') ) + '</p>'
+	tag +=		'<p>거주지역 : ' + info.residence + '</p>'
+	tag +=		'<p>직업 : ' + info.job + '</p>'
+	
+	const salarys = {
+			"2999" : "3000만원 이하",
+			"3000" : "3천만원대",
+			"4000" : "4천만원대",
+			"5000" : "5천이상 ~ 1억원 이하",
+			"10000" : "1억원 이상"
+	}
+	
+	tag +=		'<p>연봉 : ' + salarys[info.salary] + '</p>'
+	tag +=		'<p>종교 : ' + info.religion + '</p>'
+	tag +=		'<p style="font-size: 20px; margin-top: 10px;">자기소개</p>'
+	tag	+=		'<pre>' + info.introduce + '</pre>' 
+    tag += '	 <div class="tryMatchSb">'
+    tag += '   		<div class="consent">수락</div>'  		
+    tag += '   		<div class="refuse">거절</div>'  		
+    tag += '   		<div class="defer">보류</div>'  
+    tag += '	 </div>'	
+  	tag += '</div>'
+      
    
-   reqUserInfo.innerHTML = tag  
+   profile.innerHTML = tag 
    
-   reqUseroverlay.classList.toggle('hidden')
-   reqUserInfo.style.transitionDuration = '1s'
-   reqUserInfo.style.top = '50%'    
+   profileToggle()    
    
    const consent = document.querySelector('.consent')
    const refuse = document.querySelector('.refuse')
@@ -53,25 +89,37 @@ async function onReceive(chat) {
    
    
    
-   consent.onclick = async function(event) {
-   		const consentUrl = cpath + '/matchAjax/consent?reqUser=' + userid + '&respUser=' + respUser
-   		console.log(consentUrl)
-   		
-   		const consentRow = await fetch(consentUrl).then(resp => resp.text())
-   		
-   		if(consentRow === '1') {
-   			reqUserInfo.style.top = '200%'
-   			reqUseroverlay.classList.toggle('hidden')
-   		} else {
-   			alert('수락 실패 !')
-   		}
+  consent.onclick = async function(event) {
+         const consentUrl = cpath + '/matchAjax/consent?reqUser=' + userid + '&respUser=' + respUser
+         console.log(consentUrl)
+         
+         const consentRow = await fetch(consentUrl).then(resp => resp.text())
+         
+         if(consentRow === '1') {
+            profileToggle()
+            stomp.send('/broker/' + userid, {}, JSON.stringify({
+               from: username,
+               text: '매칭수락'
+            }))
+            swal.fire({
+               title: '매칭성사',
+               text: '매칭이 성사되어 채팅방이 열렸습니다! 확인해보세요~',
+               icon: 'success',
+               confirmButtonText: '확인'
+            }).then((result) => {
+               if (result.isConfirmed) {
+              location.reload();
+               }
+         }) 
    }
+  }
    
    
    refuse.onclick = async function(event) {
    		stomp.send('/app/refuseMessage/' + userid, {}, JSON.stringify({
-   			to: username
-   		}))
+            from: username,
+            text: '매칭거부'
+         }))
    
    		const refuseUrl = cpath + '/matchAjax/refuse?reqUser=' + userid + '&respUser=' + respUser
    		console.log(refuseUrl)
@@ -79,8 +127,7 @@ async function onReceive(chat) {
    		const row = await fetch(refuseUrl).then(resp => resp.text())
    
    		if(row === '1') {
-     	 	reqUserInfo.style.top = '200%'
-     	 	reqUseroverlay.classList.toggle('hidden')
+     	 	profileToggle()
    		} else {
       		alert('거절 실패 !')
       	}
@@ -89,8 +136,7 @@ async function onReceive(chat) {
    
    
    defer.onclick = function(event) {
-   		reqUserInfo.style.top = '200%'
-   		reqUseroverlay.classList.toggle('hidden')
+   		profileToggle()
    		alert('매칭을 보류했어요 ! 마이 매칭을 확인하세요 :)')
    }
    

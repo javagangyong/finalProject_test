@@ -1,59 +1,81 @@
+
+function profileToggle() {
+    const profile = document.getElementById('ch_oponent_profile')
+    const overlay = document.getElementById('ch_profile_overlay')
+    const kdoverlay = document.getElementById('kdoverlay')
+    profile.classList.toggle('ch_height_toggle')
+    overlay.classList.toggle('ch_height_toggle')
+    kdoverlay.classList.toggle('hidden')
+}
+
+
 async function kdprofileLoadHandler(event) {
-      const userid = event.target.getAttribute('value')
-      const kduserInfo = document.querySelector('.kduserInfo')
-      const kdoverlay = document.querySelector('.kdoverlay')
+      let oponent = event.target.getAttribute('value')
+      const profile = document.getElementById('ch_oponent_profile')
       
-//    console.log(userid)
+      console.log(oponent)
 
-      const url = cpath + '/matchAjax/userInfo/' + userid
-      const dto = await fetch(url).then(resp => resp.json())
-      console.log(dto)
+      const url = cpath + '/matchAjax/userInfo/' + oponent
+      const info = await fetch(url).then(resp => resp.json())
       
-      let tag = '';
-      tag += '   <div class="kdSb">'
-      tag += '      <div class="leftProfile">'
-      tag += '         <div>이름 : ' + dto.username + '</div>'
-      tag += '         <div>' + dto.birthYear + '년' + dto.birthMonth + '월' + dto.birthDay + '일생</div>'
-      tag += '         <div>키 : ' + dto.height + '</div>'
-      tag += '         <div>직업 : ' + dto.job + '</div>'
-      tag += '         <div>학벌 : ' + dto.education + '</div>'
-      tag += '         <div>자가 보유 : ' + dto.estate + '</div>'
-      tag += '         <div>자차 보유 : ' + dto.owncar + '</div>'
-      tag += '         <div>거주지 : ' + dto.residence + '</div>'
-      tag += '         <div>연봉 : ' + dto.salary + '</div>'
-      tag += '         <div>종교 : ' + dto.religion + '</div>'
-      tag += '         <div>과거 결혼 여부 : ' + dto.marriedCount + '</div>'
-      tag += '      </div>'
-      const kdImgUrl = cpath + '/upload/' + dto.profile
-      tag += '      <div class="kduserImg" style="background-image: url(\'' + kdImgUrl + '\');\"></div>'
-      tag += '   </div>'
-      tag += '   <div>자기소개 : ' + dto.introduce + '</div>'
-      
-      const reqUser = user
-      const respUser = userid
-      const matchCountUrl = cpath + '/matchAjax/matchCount?reqUser=' + reqUser + '&respUser=' + respUser
-	  const matchCount = await fetch(matchCountUrl).then(resp => resp.text())
+  	let year = new Date()
+	profile.innerHTML = ''
+	let profileURL = cpath + '/upload/' + info.profile
+	let tag = ''
+	tag += '<div id="ch_oponent_img">'
+	tag += 		'<div style="margin-top: 15px; background-image: url(\'' + profileURL +'\')">'
+	tag += 		'</div>'
+	tag += '</div>'
+	tag += '<div id="ch_oponent_detail">'
+	tag += 		'<p>' + info.username + ' (' + (year.getFullYear() - info.birthYear + 1) + ' 세)' + '</p>'
+	tag +=		'<p>' + info.birthYear + '년 ' + info.birthMonth + '월 ' + info.birthDay + '일생' + '</p>'
+	tag +=		'<p>결혼여부 : ' + (info.marriedCount == 0 ? '없음' : (info.marreidCount == 1 ? '1회 있음' : '2회 이상') ) + '</p>'
+	tag +=		'<p>거주지역 : ' + info.residence + '</p>'
+	tag +=		'<p>직업 : ' + info.job + '</p>'
+	
+	const salarys = {
+			"2999" : "3000만원 이하",
+			"3000" : "3천만원대",
+			"4000" : "4천만원대",
+			"5000" : "5천이상 ~ 1억원 이하",
+			"10000" : "1억원 이상"
+	}
+	
+	tag +=		'<p>연봉 : ' + salarys[info.salary] + '</p>'
+	tag +=		'<p>종교 : ' + info.religion + '</p>'
+	tag +=		'<p style="font-size: 20px; margin-top: 10px;">자기소개</p>'
+	tag	+=		'<pre>' + info.introduce + '</pre>'
+    const reqUser = user
+    const respUser = oponent
+    const matchCountUrl = cpath + '/matchAjax/matchCount?reqUser=' + reqUser + '&respUser=' + respUser
+    const matchCount = await fetch(matchCountUrl).then(resp => resp.text())
 
-      if(matchCount === '0') {
-      	tag += '   <div><button onclick="tryMatchHandler(event)" id="tryMatch" value="' + userid + '">매칭 시도</button></div>'
-      } else {
-      	tag += '	<div class="alreadyMatch">이미 매칭시도중인 상대입니다</div>'
-      }
+	const reqGender = gender
+    if(matchCount === '0') {
+  	  tag += '<p><button onclick="tryMatchHandler(event)" class="tryMatch  ' + (reqGender === '남성' ? 'tryMatch_bg_women' : 'tryMatch_bg_men') + '" value="' + oponent + '">매칭 시도</button></p>';
+    } else {
+  	  tag += '	<p class="alreadyMatch">이미 매칭시도중인 상대입니다</p>'
+    }
+	tag += '</div>'
+      
+    tag += '<button id="ch_profile_close">닫기</button>'
       
       
-      kduserInfo.innerHTML = tag
+      profile.innerHTML = tag
 //      console.log(kduserInfo)
 //      console.log(tag)
       
-      kdoverlay.classList.toggle('hidden')
-      kduserInfo.style.transitionDuration = '1s'
-      kduserInfo.style.top = '50%'
+      profile.innerHTML = tag
+	  profileToggle()
+	  const profileCloseBtn = document.getElementById('ch_profile_close')
+	  profileCloseBtn.onclick = profileToggle
       
-   }
+}
+   
+   
+   
    
 async function tryMatchHandler(event) {
-    const kduserInfo = document.querySelector('.kduserInfo')
-    const kdoverlay = document.querySelector('.kdoverlay')
     const reqUser = user
     const reqUsername = username
     const respUser = event.target.getAttribute('value')
@@ -80,17 +102,8 @@ async function tryMatchHandler(event) {
     
     const map = await fetch(tryMatchUrl, tryMatchOpt).then(resp => resp.json())
     
-    kdoverlay.classList.toggle('hidden')
-    kduserInfo.style.transitionDuration = 'unset'
-    kduserInfo.style.top = '200%'
+    profileToggle()
     
     alert(map.message)
  }
-
-function kdoverlayHandler() {
-	   const kdoverlay = document.querySelector('.kdoverlay')
-	   const kduserInfo = document.querySelector('.kduserInfo')
-	   kdoverlay.classList.toggle('hidden')
-	   kduserInfo.style.transitionDuration = 'unset'
-	   kduserInfo.style.top = '200%'
-	}
+ 
