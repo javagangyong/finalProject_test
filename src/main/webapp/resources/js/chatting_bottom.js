@@ -79,6 +79,7 @@ async function disconnect(event) {
 		target = target.parentNode
 	}
 	const roomName = target.getAttribute('roomname')
+	const room = document.querySelector('.room[roomname="' + roomName +'"]')
 	
 	const url = cpath + '/matchAjax/disconnect'
 	console.log(reqUser)
@@ -94,6 +95,12 @@ async function disconnect(event) {
 				"Content-Type" : "application/json; charset=utf-8"
 			}
 	}
+	
+	const disconnect = room.querySelector('.disconnect')
+	disconnect.classList.remove('hidden')							
+	const matchingEnd = room.querySelector('.matchingEnd')
+	matchingEnd.classList.add('hidden')
+	stomp.unsubscribe('/broker/chat/' + roomName)
 		
 	const result = await fetch(url, opt).then(resp => resp.text())
 	
@@ -103,6 +110,7 @@ async function disconnect(event) {
 			text: "매칭종료",
 			from: username
 		}))
+		
 	}
 }
 
