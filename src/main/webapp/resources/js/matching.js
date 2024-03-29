@@ -1,3 +1,12 @@
+function profileToggle() {
+    const profile = document.getElementById('ch_oponent_profile')
+    const overlay = document.getElementById('ch_profile_overlay')
+    const reqUseroverlay = document.getElementById('reqUseroverlay')
+    profile.classList.toggle('ch_height_toggle')
+    overlay.classList.toggle('ch_height_toggle')
+    reqUseroverlay.classList.toggle('hidden')
+}
+
 async function onReceive(chat) {
    const content = JSON.parse(chat.body);
    const text = content.text;
