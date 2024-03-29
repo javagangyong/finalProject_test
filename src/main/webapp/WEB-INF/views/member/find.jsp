@@ -88,13 +88,14 @@
             </head>
             <style>
 	            .inputframe{
-	        		width: 150px;
-	        		height: 60px;
+	        		width: 300px;
+	        		height: 30px;
 	        		border: 1px solid lightgrey;
 	        		box-sizing: border-box;
 	        		padding: 5px 10px;
 	        		color: black;
 	        		font-size: 16px;
+	            	border-radius: 5px;
 	        	}
             </style>
             <body>

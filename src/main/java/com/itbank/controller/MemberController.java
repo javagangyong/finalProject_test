@@ -1,5 +1,7 @@
 package com.itbank.controller;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +30,6 @@ public class MemberController {
 
 	@Autowired
 	private MemberService ms;
-
 
 	@Autowired
 	private MailComponent mailComponent;
@@ -65,6 +66,14 @@ public class MemberController {
 			return "redirect:/alert";
 		}
 		int row = ms.updateLastLogin(login.getUserid());
+
+		java.util.Date utilDate = new java.util.Date();
+
+		// java.util.Date를 java.sql.Date로 변환
+		java.sql.Date today = new java.sql.Date(utilDate.getTime());
+
+		login.setLastLoginDate(today);
+
 		if (save != null) {
 			Cookie cookie = new Cookie("save", dto.getUserid());
 			cookie.setMaxAge(604800);
@@ -160,12 +169,11 @@ public class MemberController {
 		}
 	}
 
-
 	@PostMapping("/findPW")
 	@ResponseBody
 	public String findPW(@RequestBody MemberDTO dto) {
 		String result = ms.resetPassword(dto);
-		if(result != null) {
+		if (result != null) {
 			ms.sendTemporaryPasswordByEmail(dto.getEmail(), result); // 이메일로 임시 비밀번호 전송
 		}
 		return result != null ? "success" : "fail"; // 성공 여부 반환

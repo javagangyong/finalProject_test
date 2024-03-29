@@ -68,7 +68,7 @@ public interface MemberDAO {
 	@Delete("delete from member where userid = #{userid} and userpw = #{userpw}")
 	int memberDelete(MemberDTO dto);
 
-	@Update("update member " + " set" + " lastLoginDate = sysdate" + " where userid = #{userid}")
+	@Update("update member set lastLoginDate = sysdate where userid = #{userid}")
 	int updateLastLogin(String userid);
 
 	@Select("select * from MemberInfo where userid = #{userid}")

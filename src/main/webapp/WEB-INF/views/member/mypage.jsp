@@ -3,15 +3,22 @@
 <%@ include file="../header.jsp"%>
 
 <style>
+body, html { 
+   height: 100%; 
+   margin: 0; 
+   display: flex; 
+   justify-content: center; 
+   align-items: center;
+        }
 aside {
    position: fixed;
    top: 100px;
    left: 0;
-   width: 300px;
+   width: 20%;
    height: 100%;
 /*    background-color: lightgray; */
-/*    box-shadow: 1px 1px 1px black; */
-   z-index: 3;
+   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); 
+/*    z-index: 3; */
    transition-duration: 0.5s;
 }
 
@@ -45,7 +52,9 @@ aside>div.item:hover {
 div.content {
    position: relative;
    top: 150px;
-   left: 350px;
+   left: -20%;
+   justify-content: center;
+   align-items: center;
 }
 
 mpmodify {
@@ -68,15 +77,6 @@ mpmodify {
    flex-flow: column;
    justify-content: center;
    align-items: center;
-}
-
-.inputframe {
-   width: 500px;
-   height: 60px;
-   border: 1px solid lightgrey;
-   box-sizing: border-box;
-   padding: 5px 10px;
-   font-size: 16px;
 }
 
 label {
@@ -240,14 +240,18 @@ div.profile {
 
 div.preview {
    position: absolute;
+   margin-bottom: 10px;
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-position: center;
    top: 0;
    left: 0;
    display: flex;
-   justify-content: center;
-   align-items: center;
+/*    justify-content: center; */
+/*    align-items: center; */
    width: 300px;
    height: 300px;
-   border: 2px dashed black;
+/*    border: 1px solid #ccc; */
    border-radius: 50%;
 }
 
@@ -314,6 +318,34 @@ textarea.introduce {
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.5);
 }
+
+   form {
+      width: 500px;
+      font-size: 13px;
+      color: #105dae;
+     }
+	.container {
+/*       border: 1px solid #ccc; */
+      padding: 20px;
+      border-radius: 5px;
+  }
+/*     #myprofile { */
+/*        	position: relative; */
+/*        	display: flex; */
+/*        	flex-flow: column; */
+/*        	justify-content: center; */
+/*        	align-items: center; */
+/*          	} */
+   .inputframe {
+   		width: 500px;
+   		height: 60px;
+   		border: 1px solid lightgrey;
+   		box-sizing: border-box;
+   		padding: 5px 10px;
+   		color: black;
+   		font-size: 16px;
+       }
+       
 </style>
 
 <section id="root">
@@ -361,15 +393,15 @@ textarea.introduce {
       var contentDiv = document.querySelector('.content')
       const url = '${cpath}/ajax/myprofile?userid=${login.userid}'
       const map = await fetch(url).then(resp => resp.json())
-       const dto = map.dto
+      const dto = map.dto
       
       const getmyProfileInfo = function() {
          content.innerHTML = '';
          
-         let tag = '';
-            tag += '        <h1 align="center">내 프로필</h1>';
-         tag += '<form method="POST" enctype="multipart/form-data">';
-          tag += '    <div>';
+          let tag = '';
+          tag += '        <h1 align="center">내 프로필</h1>';
+          tag += '<div class="container">';
+          tag += '<form method="POST" id="myprofile" enctype="multipart/form-data">';
           tag += '        <h2>프로필 사진</h2>';
           tag += '        <div class="profile">'
           tag += '         <div class="preview" style=\"background-image: url(\'' + cpath + '/upload/' + dto.profile +  '\')\; background-position: center; background-size: 100%;">';
@@ -381,12 +413,12 @@ textarea.introduce {
           tag += '   <p style="width: 500px; font-size: 13px; color: #105dae;">이름</p>'
           tag += '            <input class="inputframe" type="text" value="' + '${login.username}' + '" name="username" required>';
           tag += '   <p style="width: 500px; font-size: 13px; color: #105dae;">등급</p>'            
-            tag += '         <input class="inputframe" type="text" value="' + dto.grade + '" name="grade" required>';
-            tag += '   </div>'
-             tag += '   <p style="width: 500px; font-size: 13px; color: #105dae;">아이디</p>'
-            tag += '            <input class="inputframe" type="text" value="' + '${login.userid}' + '" name="userid" readonly required>';
-            tag += '         <p>가입한 날짜 : ${login.joinDate}</p>'
-            tag += '         <p>최근 접속한 날짜 : ${login.lastLoginDate}</p>'
+          tag += '         <input class="inputframe" type="text" value="' + dto.grade + '" name="grade" required>';
+          tag += '   </div>'
+          tag += '   <p style="width: 500px; font-size: 13px; color: #105dae;">아이디</p>'
+          tag += '         <input class="inputframe" type="text" value="' + '${login.userid}' + '" name="userid" readonly required>';
+          tag += '         <p>가입한 날짜 : ${login.joinDate}</p>'
+          tag += '         <p style="margin-bottom: 20px;">최근 접속한 날짜 : ${login.lastLoginDate}</p>'
           tag += '</form>';
           
           contentDiv.innerHTML = tag;
@@ -631,7 +663,7 @@ textarea.introduce {
      const withdrawBtn = document.getElementById('withdrawBtn');
     
      withdrawBtn.addEventListener('click', function(event) {
-        event.preventDefault()   
+        event.preventDefault()
         location.href = '${cpath}/member/withdrawMember/${login.idx}'; 
      })
    
