@@ -697,7 +697,7 @@ h1, h2 {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	box-shadow: 1px 1px 15px${login.gender== '남성'? 'hotpink': 'skyblue';
+	box-shadow: 1px 1px 15px ${login.gender== '남성'? 'hotpink': 'skyblue'};
 	border-radius: 15px;
 	width: 35%;
 	height: 0px;
@@ -770,7 +770,7 @@ h1, h2 {
 	word-wrap: break-word;
 	box-sizing: border-box;
 	border-radius: 15px;
-	box-shadow: 1px 1px 40px${login.gender== '남성'? 'hotpink': 'skyblue' inset;
+	box-shadow: 1px 1px 40px ${login.gender== '남성'? 'hotpink': 'skyblue'} inset;
 	padding: 10px;
 }
 .ch_bg_women {
