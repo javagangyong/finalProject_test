@@ -97,7 +97,22 @@ public class MembershipController {
       MemberDTO mdto = (MemberDTO)session.getAttribute("login");
       String userid = mdto.getUserid();
       MembershipDTO dto = ms.getmyMembership(userid);
+      Map<String, Integer> membershipInfo = new HashMap<>();
+      membershipInfo.put("GOLD", 5);
+      membershipInfo.put("STAR", 10);
+      membershipInfo.put("PREMIUM", 20);
+      membershipInfo.put("VIP", 30);
+      
+      String currentMembership = dto.getType();
+      int currentMatchCount = dto.getMatchCount();
+      
+   // 현재 매칭 횟수가 원래의 매칭 횟수와 다른지 확인하여 환불 버튼을 표시할지 결정
+      boolean showRefundButton = currentMatchCount == membershipInfo.get(currentMembership);
+      
       mav.addObject("dto", dto);
+      mav.addObject("membershipInfo", membershipInfo);
+      mav.addObject("showRefundButton", showRefundButton);
+      System.out.println(membershipInfo);
       return mav;
    }
    

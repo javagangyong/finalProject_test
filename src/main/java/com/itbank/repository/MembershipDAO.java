@@ -39,4 +39,5 @@ public interface MembershipDAO {
    @Select("SELECT DISTINCT m.* FROM membership m JOIN member mb ON m.userid = #{userid} WHERE m.userid = #{userid}")
    MembershipDTO getMembershipInfo(String userid);
 
+
 }

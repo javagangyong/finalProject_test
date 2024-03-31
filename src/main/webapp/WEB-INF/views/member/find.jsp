@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 <style>
 	section {
-		width: 600px;
+		width: 100%;
 		height: 600px;
 	}
 	
@@ -84,27 +84,53 @@
         popup.document.write(`
             <html>
             <head>
+            <style>
+        	#find{
+        		position: fixed;
+    			top: 50%;
+    			left: 50%;
+    			transform: translate(-50%, -50%);
+        		        		
+        	}
+            .inputframe{
+        		width: 250px;
+        		height: 30px;
+        		border: 1px solid lightgrey;
+        		box-sizing: border-box;
+        		padding: 5px 10px;
+        		color: black;
+        		font-size: 16px;
+            	justify-content: center;
+    			align-items: center;
+            	border-radius: 5px;
+        	}
+            .find{
+            	all: unset;
+	    		width: 150px;
+	    		height: 40px;
+	    		border: 2px solid skyblue;
+	    		border-radius: 12px;
+	    		text-align: center;
+	    		font-weight: 300;
+	    		font-size: 20px;
+	    		margin-bottom: 10px;
+            }
+            .find:hover {
+            	cursor: pointer;
+            	background-color: lightskyblue;
+            }
+            
+        </style>
                 <title>ID 찾기</title>
             </head>
-            <style>
-	            .inputframe{
-	        		width: 300px;
-	        		height: 30px;
-	        		border: 1px solid lightgrey;
-	        		box-sizing: border-box;
-	        		padding: 5px 10px;
-	        		color: black;
-	        		font-size: 16px;
-	            	border-radius: 5px;
-	        	}
-            </style>
+            
             <body>
                 <h2 align="center" style="font-weight: 200;">ID 찾기</h2>
                 <div>
-                    <form id="findIDForm">
+                    <form id="find">
                         <p><input class="inputframe" type="text" name="username" placeholder="이름"></p>
-                        <p><input type="email" name="email" placeholder="이메일"></p>
-                        <input style="margin-top: 10px;" type="submit" value="찾기">
+                        <p><input class="inputframe" type="email" name="email" placeholder="이메일"></p>
+                        <input class="find"style="margin-top: 10px;" type="submit" value="찾기">
                     </form>
                 </div>
             </body>

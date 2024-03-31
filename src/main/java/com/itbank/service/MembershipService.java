@@ -42,4 +42,6 @@ public class MembershipService {
 		return msDao.delete(payNum);
 	}
 
+
+
 }
