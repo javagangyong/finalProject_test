@@ -5,6 +5,7 @@ function profileToggle() {
 	    overlay.classList.toggle('ch_height_toggle')
 	}
 
+// 상대방 프로필 확인
 async function ChProfileLoadHandler(event) {
 		let oponent = event.target.value
 		const profile = document.getElementById('ch_oponent_profile')
@@ -47,7 +48,8 @@ async function ChProfileLoadHandler(event) {
 		const profileCloseBtn = document.getElementById('ch_profile_close')
 	    profileCloseBtn.onclick = profileToggle
 	}
-	
+
+// 매칭 성사 알림	
 function showMatchSuccess() {	
 		if(matching != '') {
 			swal.fire({
@@ -59,6 +61,7 @@ function showMatchSuccess() {
 		}
 }
 
+// 매칭 거절 처리
 function denyHandler(event) {
 	event.preventDefault()
 	let target = event.target
@@ -74,6 +77,7 @@ function denyHandler(event) {
 	location.href = target.href
 }
 
+// 매칭 수락 처리
 function acceptHandler(event) {
 	event.preventDefault()
 	let target = event.target
@@ -88,4 +92,19 @@ function acceptHandler(event) {
 	}))
 	location.href = target.href
 }
+
+// 남은 매칭 횟수 확인
+async function membershipCountHandler(event) {
+ 	const possibleMatch = document.querySelector('.possibleMatch')
+ 	const userid = user
+ 	const url = cpath + '/matchAjax/membershipCount?userid=' + userid
+ 	console.log(url)
+ 	
+ 	const dto = await fetch(url).then(resp => resp.json())
+ 	console.log(dto)
+ 	
+ 	possibleMatch.innerText = '나의 매칭 가능 횟수 : ' + dto.matchCount
+}
+ 
+ window.onload = membershipCountHandler;
 	

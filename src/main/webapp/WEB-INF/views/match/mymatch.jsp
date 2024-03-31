@@ -124,7 +124,7 @@
 	}
 	
 	.ch_height_toggle {
-		height: 75% !important;
+		height: 96% !important;
 	}
 	
 	#ch_profile_close {
@@ -180,10 +180,29 @@
 	.ch_bg_men {
 		background-color: rgb(135, 206, 235, 0.4);
 	}
+	
+	
+	
+	
+	
+	
+	.myframe {
+		width: 900px;
+		margin: 0 auto;
+		padding: 95px 0;
+		position: relative;
+	}
+	.possibleMatch {
+		position: absolute;
+		right: 0px;
+		top: 125px;
+	}
+	
 </style>
 
-<section class="frame">
+<section class="myframe">
 	<h2 style="font-weight: 300; text-align: center;">매칭 현황</h2>
+	<div class="possibleMatch">dd</div>
 	<div>
 		<ul class="matchingList" style="border-top: 1px solid black;">
 			<li>매칭 상대</li>

@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.itbank.model.MatchDTO;
 import com.itbank.model.MemberDTO;
+import com.itbank.model.MembershipDTO;
+import com.itbank.service.ChatService;
 import com.itbank.service.MatchService;
+import com.itbank.service.MembershipService;
 
 @RestController
 @RequestMapping("/matchAjax")
@@ -23,6 +26,10 @@ public class MatchAjaxController {
 
 	@Autowired
 	private MatchService ms;
+	@Autowired
+	private MembershipService membershipService;
+	@Autowired 
+	private ChatService cs;
 
 	@GetMapping("/userInfo/{userid}")
 	public MemberDTO userInfo(@PathVariable("userid") String userid) {
@@ -33,6 +40,7 @@ public class MatchAjaxController {
 	@PostMapping("/disconnect")
 	public int disconnect(@RequestBody MatchDTO dto) {
 		int row = ms.disconnect(dto);
+		int deleted = cs.deleteChats(dto);
 		return row;
 	}
 
@@ -79,4 +87,11 @@ public class MatchAjaxController {
 		int waitMatches = ms.getWaitingMatchCount(userid);
 		return waitMatches;
 	}
+	
+	@GetMapping("/membershipCount")
+	public MembershipDTO matchCount(String userid) {
+		MembershipDTO dto = membershipService.getmyMembership(userid);
+		return dto;
+	}
+	
 }

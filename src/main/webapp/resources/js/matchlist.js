@@ -101,9 +101,23 @@ async function tryMatchHandler(event) {
     
     
     const map = await fetch(tryMatchUrl, tryMatchOpt).then(resp => resp.json())
-    
+    membershipCountHandler()
     profileToggle()
     
     alert(map.message)
  }
  
+ 
+ async function membershipCountHandler(event) {
+ 	const possibleMatch = document.querySelector('.possibleMatch')
+ 	const userid = user
+ 	const url = cpath + '/matchAjax/membershipCount?userid=' + userid
+ 	console.log(url)
+ 	
+ 	const dto = await fetch(url).then(resp => resp.json())
+ 	console.log(dto)
+ 	
+ 	possibleMatch.innerText = '나의 매칭 가능 횟수 : ' + dto.matchCount
+ }
+ 
+ window.onload = membershipCountHandler;

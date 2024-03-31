@@ -25,6 +25,8 @@
        width: 1200px;
        height: 100%;
        margin: auto;
+       padding-top: 20px;
+       position: relative;
    }
    
    #matchList {
@@ -185,7 +187,7 @@
 	}
 	.tryMatch_bg_men {
 		background-color: #FF96D0;
-	}
+	}h
 	
 	.tryMatch:hover {
 		cursor: pointer;
@@ -200,6 +202,18 @@
 		height: 100%;
 		z-index: 2;
 	}
+	
+	
+	
+	
+	
+	
+	
+	.possibleMatch {
+		position: absolute;
+		right: 65px;
+		top: 0px;
+	}
 
 </style>
 
@@ -209,6 +223,7 @@
       <span id="kdnocontent"></span>
    </div>
    <div class="matchListBox">
+   	  <div class="possibleMatch"></div>
       <div id="matchList">
          <c:forEach var="dto" items="${list }">
             <div class="matchContent">
