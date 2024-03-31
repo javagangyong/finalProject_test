@@ -43,9 +43,9 @@ public class MembershipController {
    @PostMapping("/insertMPayGold")
    @ResponseBody
    public String insertMPayGold(@RequestBody MembershipDTO mpay, HttpSession session) {
-      int row = ms.insertMPay(mpay, session);
+	  int row = ms.insertMPay(mpay, session);
       System.out.println(row != 0 ? "결제 성공" : "결제 실패");
-      return "redirect:/membership/purcharse";
+	  return "redirect:/membership/purcharse";
    }
    
    @PostMapping("/insertMPayStar")
@@ -54,6 +54,14 @@ public class MembershipController {
       int row = ms.insertMPay(mpay, session);
       System.out.println(row != 0 ? "결제 성공" : "결제 실패");
       return "redirect:/membership/purcharse";
+   }
+   
+   @PostMapping("/insertMPayPm")
+   @ResponseBody
+   public String insertMPayPm(@RequestBody MembershipDTO mpay, HttpSession session) {
+	  int row = ms.insertMPay(mpay, session);
+      System.out.println(row != 0 ? "결제 성공" : "결제 실패");
+	  return "redirect:/membership/purcharse";
    }
    
    @PostMapping("/insertMPayVip")
@@ -65,8 +73,18 @@ public class MembershipController {
    }
    
    @GetMapping("/purchase")
-   public void purchase() {
-      
+   public ModelAndView purchase(HttpSession session) {
+	  ModelAndView mav = new ModelAndView("/membership/purchase");
+      MemberDTO login = (MemberDTO) session.getAttribute("login");
+      String userid = login.getUserid();
+      MembershipDTO dto = ms.getmyMembership(userid);
+      if(dto != null) {
+    	  mav.addObject("msg", "이미 멤버십 회원입니다.");
+    	  mav.addObject("url", "/");
+    	  mav.setViewName("manageAlert");
+    	  return mav;
+      } 
+      return mav;
    }
    @GetMapping("/introduce")
    public void introduce() {

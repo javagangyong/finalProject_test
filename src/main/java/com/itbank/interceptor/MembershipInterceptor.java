@@ -36,8 +36,9 @@ public class MembershipInterceptor implements HandlerInterceptor{
 	             request.setAttribute("url", "/");
 	             rd.forward(request, response);
 	        	return false;
+	      
 	        } else {
-	            return true;
-	    }
+	        	return true;
+	        }
 	 }
 }
