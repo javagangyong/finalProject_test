@@ -97,7 +97,7 @@
 </section>
 
 <div id="ch_member_text">
-	<h1>듀세요는 현재 ${mem_count }명의</h1>
+	<h1>듀세요는 현재 21,372명의</h1>
 	<h1>회원과 함께하고 있습니다!</h1>
 </div>
 

@@ -22,4 +22,8 @@ public class ChatService {
 	public List<ChatDTO> selectChats(MatchDTO dto) {
 		return dao.selectChats(dto);
 	}
+
+	public int deleteChats(MatchDTO dto) {
+		return dao.deleteChats(dto);
+	}
 }

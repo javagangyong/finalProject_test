@@ -77,4 +77,10 @@ public class StompController {
 	public MessageDTO refuseMessage(MessageDTO dto) {
 		return dto;
 	}
+	
+	@MessageMapping("/broker/{userid}")
+	@SendTo("/broker/{userid}")
+	public MessageDTO sendResponse(MessageDTO dto) {
+		return dto;
+	}
 }

@@ -72,7 +72,7 @@
 
 	
 	#people {
-	    background-image: url(/duo/resources/image/login.png);
+	    background-image: url('${cpath}/resources/image/login.png');
 	    background-size: 532px 450px;
 	    background-position: -186px -407px;
 	    background-repeat: no-repeat;
@@ -83,7 +83,7 @@
 	}
 	
 	#lock {
-		background-image: url(/duo/resources/image/login.png);
+		background-image: url('${cpath}/resources/image/login.png');
 	    background-size: 532px 450px;
 	    background-position: -257px -407px;
 	    background-repeat: no-repeat;

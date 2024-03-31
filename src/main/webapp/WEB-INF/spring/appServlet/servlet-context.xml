@@ -68,6 +68,7 @@
       <interceptor>
          <mapping path="/membership/myMembership/"/>
          <mapping path="/match/**"/>
+         <exclude-mapping path="/match/mymatch"/>
          <beans:bean class="com.itbank.interceptor.MembershipInterceptor" />
       </interceptor>
       <interceptor>

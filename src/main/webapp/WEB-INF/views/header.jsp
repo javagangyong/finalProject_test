@@ -72,7 +72,7 @@ button:hover {
 }
 
 #logo>a>img {
-	max-height: 40px;
+	max-height: 110px;
 }
 
 .frame {
@@ -114,6 +114,7 @@ button:hover {
 	width: 60px;
 	height: 60px;
 	border-radius: 50%;
+	max-width: 100%;
 }
 
 #ch_user_alarm {
@@ -361,6 +362,43 @@ h1, h2 {
 	align-items: center;
 	font-size: 20px;
 	font-weight: 300;
+	margin: 5px;
+}
+
+.chatroom > div:nth-child(1) {
+	border-radius: 50%;
+}
+
+.chatroom > div:nth-child(2) {
+	width: 80%;
+	font-size: 15px;
+}
+
+.chatroom  p {
+	margin: 0;
+	margin-left: 5px;
+	padding: 2px;
+	width: fit-content;
+	white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+}
+
+.ch_msg_date {
+	font-size: 13px;
+	background-color: skyblue;
+    width: fit-content;
+    margin: 5px auto;
+    border-radius: 10px;
+    padding: 3px 25px;
+}
+
+#ch_room_profile {
+	width: 50px;
+	height: 50px;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 .chatroom:hover {
@@ -780,6 +818,9 @@ h1, h2 {
 .ch_bg_men {
 	background-color: rgb(135, 206, 235, 0.4);
 }
+
+
+
 </style>
 </head>
 <body>
@@ -789,7 +830,7 @@ h1, h2 {
 		<div class="header">
 			<div id="logo">
 				<a href="${cpath }"><img
-					src="https://www.duo.co.kr/html/main_img_2019/logo.svg"></a>
+               src="${cpath }/resources/image/듀세요로고.png"></a>
 			</div>
 			<ul id="menu">
 				<li category="match">매칭시스템</li>
@@ -797,14 +838,14 @@ h1, h2 {
 				<li>고객문의</li>
 				<li category="marrige">회원&성혼</li>
 				<!-- 				<li>러브테스트</li> -->
-				<li category="membership">멤버쉽</li>
+				<li category="membership">멤버십</li>
 			</ul>
 			<div id="loginUser">
 				<div class="${empty login ? 'hidden' : ''}" id="ch_login_user">
 					<button id="ch_user_alarm" onclick="newsAppearHandler()">🔔</button>
 					<div class="ch_user_news hidden"></div>
 					<h2 style="color: inherit; font-size: 20px;">${login.username }님</h2>
-					<img id="ch_user_profile" src="${cpath }/upload/${login.profile }">
+					<img id="ch_user_profile">
 				</div>
 			</div>
 		</div>
@@ -888,7 +929,8 @@ h1, h2 {
 
 	<div class="${empty login ? 'hidden' : '' }" id="chat_open_btn"
 		onclick="chatAppearHandler()">
-		<span id="chat_heart">💗</span> <span>CHAT</span>
+		<span id="chat_heart">💗</span> 
+		<span>CHAT</span>
 	</div>
 
 
@@ -918,4 +960,13 @@ h1, h2 {
 		if (user != '') {
 			stomp.connect({}, chatListLoadHandler)
 		}
+		
+		async function ChUserProfileImgHandler() {
+			const url = cpath + '/member/spec?userid=' + user
+			const result = await fetch(url).then(resp => resp.json())
+			const userProfile = document.getElementById('ch_user_profile')
+			userProfile.src = cpath + '/upload/' + result.profile
+		}
+		
+		document.addEventListener('DOMContentLoaded', ChUserProfileImgHandler)
 	</script>

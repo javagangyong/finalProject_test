@@ -38,10 +38,8 @@ public class HomeController {
 		List<String> menProfiles = ms.getProfiles(gender);
 		gender = "여성";
 		List<String> womenProfiles = ms.getProfiles(gender);
-		int mem_count = ms.getMemberCount();
 		mav.addObject("mProfiles", menProfiles);
 		mav.addObject("wProfiles", womenProfiles);
-		mav.addObject("mem_count", mem_count);
 		return mav;
 	}
 	

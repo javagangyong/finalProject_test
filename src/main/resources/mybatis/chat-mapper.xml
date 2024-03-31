@@ -22,25 +22,9 @@
 		order by c.sendtime
 	</select>
 	
-	<select id="getMyDetail" resultType="com.itbank.model.MemberDTO">
-      select * from member_con where userid = #{userid}
-   	</select>
-   
-    <select id="selectMatchList" parameterType="com.itbank.model.MemberDTO" resultType="com.itbank.model.MemberDTO">
-       SELECT * FROM member_con
-       <where>
-           <if test="gender == '남성'">
-               gender = '여성'
-           </if>
-           <if test="gender == '여성'">
-               gender = '남성'
-           </if>
-           <!-- 추가적인 조건절 -->
-         AND grade = #{grade}
-       </where>
-    </select>
-   
-    <select id="selectGetUserInfo" resultType="com.itbank.model.MemberDTO">
-      select * from member_con where userid = #{userid}
-    </select>
+	<delete id="deleteChats" parameterType="msg">
+		delete from chatting
+			where (sendUser = #{reqUser} and receiveUser = #{respUser})
+			or (sendUser = #{respUser} and receiveUser = #{reqUser}) 
+	</delete>
 </mapper>

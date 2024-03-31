@@ -1,5 +1,10 @@
 	function getCurrentHHmm() {
 	    const d = new Date();
+	    let yyyy = d.getFullYear()
+	    let MM = d.getMonth() + 1
+	    MM = (MM < 10) ? '0' + MM : MM
+	    let dd = d.getDate()
+	    dd = (dd < 10) ? '0' + dd : dd
 	    let h = d.getHours();
 	    let m = d.getMinutes();
 	    let ampm = '오전';
@@ -21,20 +26,27 @@
 	    if (m < 10)
 	        m = '0' + m;
 	
-	    return ampm + ' ' + h + ':' + m;
+	    return yyyy + '/' + MM + '/' + dd + '-' + ampm + ' ' + h + ':' + m;
 	}
-
-
+	
+	// 채팅 수신
 	async function receiveChat(chat) {
 		const content = JSON.parse(chat.body)
 		const from = content.from
-		let roomName = content.roomName
-		const time = content.time
+		var roomName = content.roomName
+		const sendTime = content.time
+		let sendDate = null
+		let time = null
+		if(sendTime != null) {
+			sendDate = content.time.split("-")[0]
+			time = content.time.split("-")[1]
+		}
 		const profile = content.profile
 		const profileUrl = cpath + '/upload/' + profile
 		const text = content.text
 		const room = document.querySelector('.room[roomname="' + roomName + '"]')
 		const messageArea = document.querySelector('.messageArea[roomname="' + roomName +'"]')
+		
 		// 상대방과 매칭 종료시
 		if(text == '매칭종료') {
 			if(room.classList.contains('hidden')) {
@@ -54,6 +66,7 @@
 			stomp.unsubscribe('/broker/chat/' + roomName)
 			return;
 		}
+		
 		// 현재 상대방과의 채팅방이 숨김 상태일때 알림 표시
 		if(room.classList.contains('hidden')) {
 			const talkAlarm = document.querySelector('.talkAlarm')
@@ -69,19 +82,36 @@
 		
 		let who = (from == username ? 'rightMsg' : 'leftMsg')
 		let finalMsg = messageArea.lastElementChild
+		let str = ''
+			
+		// 날짜 구분용
+		let today = new Date()
+		let yyyy = today.getFullYear()
+		let MM = today.getMonth() + 1
+		let dd = today.getDate()
+		MM = (MM < 10) ? ('0' + MM) : MM
+		dd = (dd < 10) ? ('0' + dd) : dd
+				
+		// 채팅을 아직 하나도 주고받지 않은 경우
 		if(finalMsg == null) {
 			finalMsg = document.createElement('div')
+			str += '<div class="ch_msg_date">' + yyyy + '년 ' + MM + '월 ' + dd + '일' + '</div>'	
+		}	
+		else if(sendDate != finalMsg.querySelector('sub').getAttribute('sendDate')) {
+			// 가장 최근에 온 채팅의 날짜와 현재 수신한 채팅의 날짜가 다르면 날짜 구분 div 추가
+			str += '<div class="ch_msg_date">' + yyyy + '년 ' + MM + '월 ' + dd + '일' + '</div>'
 		}
-		let str = ''
+		
 		str += '<div class="' + who
 				+ '" dir="' + who + '">'
  	    str += '<label class="' + (from == username ? 'hidden' : '') + '" id="oponent">'
  
+ 	    // 프로필
  	    if(messageArea.childElementCount == 0) { 	    	
  	    	str += '<span id="oponent_profile" style="background-image: url(\'' + profileUrl + '\')"></span>'
  	    	str += '<span style="font-size: 12px;">' + from + '</span>'
  	    }
- 	    else if(who == finalMsg.getAttribute('dir') && finalMsg.querySelector('sub').innerText != content.time) {
+ 	    else if(who == finalMsg.getAttribute('dir') && finalMsg.querySelector('sub').innerText != time) {
  	    	str += '<span id="oponent_profile" style="background-image: url(\'' + profileUrl + '\')"></span>'
  	    	str += '<span style="font-size: 12px;">' + from + '</span>'
  	    	
@@ -91,16 +121,17 @@
  	    	str += '<span style="font-size: 12px;">' + from + '</span>'
  	    }
 		
-	    if(who == finalMsg.getAttribute('dir') && finalMsg.querySelector('sub').innerText == content.time) {
+	    if(who == finalMsg.getAttribute('dir') && finalMsg.querySelector('sub').innerText == time) {
  	    	finalMsg.children[1].children[2].remove()
  	    }
 		
 		str += '</label>'
 		str += '<div>'
 		str += '<span style="font-size: 12px;">' + text + '</span>'
-		str += '<br><sub>' + content.time + '</sub>'
+		str += '<br><sub sendDate="' + sendDate + '">' + time + '</sub>'
 		str += '</div></div>'
 		
+		document.querySelector('.chatroom[roomname="' + roomName + '"]').children[1].children[1].innerText = text
 		messageArea.innerHTML += str
 		messageArea.scrollTop = messageArea.scrollHeight
 	}

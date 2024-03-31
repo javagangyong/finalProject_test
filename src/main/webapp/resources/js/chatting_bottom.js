@@ -11,6 +11,7 @@ function chatAppearHandler() {
 // 채팅방 목록 화면으로 되돌아가는 함수
 function showMainChatHandler() {
 	const chatArea = document.querySelector('.chat')
+	const chatBackBtn = document.getElementById('chat_close_btn')
 	// room 클래스를 가진 모든 요소를 가져옵니다.
 	const rooms = document.querySelectorAll('.room')
 
@@ -26,12 +27,23 @@ function showMainChatHandler() {
 		})
 	chatArea.classList.remove('hidden')
 	visibleRoom.classList.toggle('hidden')
+	chatBackBtn.classList.remove('hidden')
 }
 
 
 // 채팅방 클릭시 해당 채팅방을 표시
 function chatRoomHandler(event) {
-	let roomName = event.target.getAttribute('roomname')
+	let target = event.target
+	let roomName = null
+	if(target.tagName != 'BUTTON') {		
+		while(!target.classList.contains('chatroom')) {
+			target = target.parentNode
+		}
+		roomName = target.getAttribute('roomname')
+	}
+	else {
+		roomName = event.target.getAttribute('roomname')
+	}
 	
 	// 모든 방을 일단 숨김
 	const rooms = document.querySelectorAll('.room')
@@ -82,8 +94,6 @@ async function disconnect(event) {
 	const room = document.querySelector('.room[roomname="' + roomName +'"]')
 	
 	const url = cpath + '/matchAjax/disconnect'
-	console.log(reqUser)
-	console.log(respUser)
 	const ob = {
 			reqUser: reqUser,
 			respUser: respUser
@@ -114,6 +124,7 @@ async function disconnect(event) {
 	}
 }
 
+// 채팅방 리로드 함수
 function chatreloadHandler() {
 	const chatArea = document.querySelector('.chat') // 채팅방 메인창
 	chatArea.querySelector('.chat_main').innerHTML = ''
@@ -123,6 +134,7 @@ function chatreloadHandler() {
 	closeBtn.classList.remove('hidden')
 }
 
+// 매칭중인 상대 리스트 불러오는 함수
 async function chatListLoadHandler() {
 	
 	stomp.subscribe('/broker/' + user, onReceive)
@@ -157,7 +169,13 @@ async function chatListLoadHandler() {
 		
 		// 대화 상대 리스트 생성
 		let tag = ''
-		tag += '<div class="chatroom" roomname="' + roomName + '" onclick="chatRoomHandler(event)">' + oponent + '님 과의 채팅방</div>' 
+		tag += '<div class="chatroom" roomname="' + roomName + '" onclick="chatRoomHandler(event)">'
+		tag += 		'<div id="ch_room_profile"></div>'
+		tag += 		'<div>' 
+		tag += 			'<p>' + oponent + '</p>'
+		tag += 			'<p id="ch_last_msg"></p>'
+		tag += 		'</div>'
+		tag += '</div>' 
 		chatArea.querySelector('.chat_main').innerHTML += tag
 		
 		// 각 방에 구독
@@ -207,18 +225,27 @@ async function chatListLoadHandler() {
 		// 불러온 채팅 목록을 미리 채팅방에 추가
 		let previousSendTime = null; // 이전 채팅의 sendTime을 저장하기 위한 변수
 		let previousUser = null;	 // 이전 채팅을 보낸 유저를 저장하기 위한 변수
+		let finalMsg = null;
 		for (let i = 0; i < chatList.length; i++) {
-		    const chat = chatList[i];				
+		    const chat = chatList[i];
+		    let sendDate = chat.sendTime.split("-")[0]
 		    const currentSendTime = chat.sendTime;	 // 현재 요소(채팅)의 전송 시간
 		    const currentSendUser = chat.sendUserId; // 현재 요소(채팅)을 보낸 사람
 		    let who = chat.sendUserId == user ? 'rightMsg' : 'leftMsg' // 보낸 사람이 로그인 중인 유저와 같으면 오른쪽에 표시, 다르면 왼쪽에 표시
-		    	
+		    let profileURL = cpath + '/upload/' + chat.profile;
 		    // 채팅 생성	
 		    let str = '';
+		    
+		    // 날짜 구분
+		    if(i == 0 || previousSendTime.split("-")[0] != sendDate) {
+		    	let yyyy = sendDate.split("/")[0]
+		    	let MM = sendDate.split("/")[1]
+		    	let dd = sendDate.split("/")[2]
+		    	str += '<div class="ch_msg_date">' + yyyy + '년 ' + MM + '월 ' + dd + '일' + '</div>'
+		    }
+		    
 		    str += '<div class="' + who + '">';
 		    str += '<label class="' + (chat.sendUserId == user ? 'hidden' : '') + '" id="oponent">'; // 프로필 사진과 이름을 표시하기 위한 라벨, 보낸 사람이 자신일때는 숨김
-		    let profileURL = cpath + '/upload/' + chat.profile;
-		    
 		    if(currentSendTime != previousSendTime || previousUser != currentSendUser) {	// 이전 채팅의 전송 시간과 현재 채팅의 전송 시간이 다르거나
 		    																				// 이전 채팅을 보낸 사람과 현재 채팅을 보낸 사람이 다르면
 		    																				// 프로필 사진 표시
@@ -236,7 +263,7 @@ async function chatListLoadHandler() {
 		    	str += '<br><sub>' + chat.sendTime.split("-")[1] + '</sub>';
 		    }
 		    if(i === chatList.length - 1) {	// 마지막 채팅이라면 시간 표시
-		    	str += '<br><sub>' + chat.sendTime.split("-")[1] + '</sub>';
+		    	str += '<br><sub sendDate="' + chat.sendTime.split("-")[0] +'">' + chat.sendTime.split("-")[1] + '</sub>';
 		    }
 		    str += '</div>';
 		    str += '</div>';
@@ -244,6 +271,10 @@ async function chatListLoadHandler() {
 		    
 		    previousSendTime = currentSendTime
 		    previousUser = currentSendUser
+		    
+		    if(i == chatList.length - 1) {
+		    	finalMsg = chat.text
+		    }
 		}
 		
 		
@@ -255,9 +286,17 @@ async function chatListLoadHandler() {
 		room +=  '</section>'
 		
 		document.body.innerHTML += room
+		const chatroom = document.querySelector('.chatroom[roomname="' + roomName +'"]')
+		chatroom.children[1].children[1].innerText = finalMsg
+		let oponentProfile = await fetch(cpath + '/member/spec?userid=' + oponentId).then(resp => resp.json())
+		let oponentProfileURL = cpath + '/upload/' + oponentProfile.profile
+		console.log(chatroom.children[0])
+		chatroom.children[0].style.backgroundImage = 'url(\'' + oponentProfileURL + '\')'
 	}
 }
 
+
+// 소식창 표시 토글
 async function newsAppearHandler() {
 	const userNews = document.querySelector('.ch_user_news')
 	userNews.innerText = ''

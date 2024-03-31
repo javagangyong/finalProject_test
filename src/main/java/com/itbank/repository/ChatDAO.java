@@ -12,4 +12,6 @@ public interface ChatDAO {
 
 	List<ChatDTO> selectChats(MatchDTO dto);
 
+	int deleteChats(MatchDTO dto);
+
 }

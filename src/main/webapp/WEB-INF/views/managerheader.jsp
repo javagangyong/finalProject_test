@@ -9,6 +9,7 @@
 <title>duseo.jsp</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+<script src="${cpath }/resources/js/manage.js"></script>
 <style>
   @import
       url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap')
@@ -47,8 +48,7 @@
 		padding: 0;
 		list-style: none;
 		display: flex;
-		justify-content: flex-start;
-		font-size: 20px;
+		font-size: 30px;
 		color: black;
 	}
 	
@@ -82,10 +82,10 @@
 <body>
 
 <header>
+	<h1 align="center">관리자 페이지</h1>
 	<ul id="managerMenu">
 		<li><a href="${cpath }/manage/members">회원 목록</a></li>
 		<li><a href="${cpath }/manage/report">신고 처리</a></li>
-		<li>성혼 회원 관리</li>
 	</ul>
 </header>
 

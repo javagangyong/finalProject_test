@@ -1,6 +1,5 @@
 package com.itbank.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.itbank.model.ChatDTO;
 import com.itbank.model.MatchDTO;
 import com.itbank.model.MemberDTO;
-import com.itbank.model.MessageDTO;
 import com.itbank.service.ChatService;
 import com.itbank.service.MatchService;
 

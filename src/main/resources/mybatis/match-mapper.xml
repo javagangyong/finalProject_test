@@ -45,8 +45,9 @@
 
 	<update id="disconnect" parameterType="match">
 		update matching set matched = 3
-		where (reqUser = #{reqUser} and respUser = #{respUser})
-		or (reqUser = #{respUser} and respUser = #{reqUser})
+		where ((reqUser = #{reqUser} and respUser = #{respUser})
+		or (reqUser = #{respUser} and respUser = #{reqUser}))
+		and matched = 1
 	</update>
 
 	<select id="getMatched" parameterType="msg">
