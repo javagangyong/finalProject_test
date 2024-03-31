@@ -24,6 +24,10 @@
 	user-select: none;
 }
 
+html {
+	scroll-behavior: smooth;
+}
+
 body {
 	margin: 0;
 	font-family: 'Noto Sans KR', sans-serif;
@@ -819,13 +823,31 @@ h1, h2 {
 	background-color: rgb(135, 206, 235, 0.4);
 }
 
-
-
+#ch_top_arrow {
+	position: fixed;
+	bottom: 12%;
+	right: 30px;
+	width: 50px;
+	height: 50px;
+	background-image: url('${cpath}/resources/image/하트화살표.jpg');
+	background-size: cover;
+	background-position: center;
+	background-color: white;
+	border-radius: 50%;
+	box-shadow: 1px 5px 8px grey;
+	z-index: -10;
+	opacity: 0;
+	cursor: pointer;
+	transition-duration: 1s;
+}
+#ch_top_arrow
 </style>
 </head>
 <body>
-
-
+	<div id="ch_top_arrow" onclick="toTopHandler()">
+	
+	</div>
+	
 	<header>
 		<div class="header">
 			<div id="logo">
@@ -953,6 +975,8 @@ h1, h2 {
 		var user = '${login.userid}'
 		var username = '${login.username}'
 		var gender = '${login.gender}'
+
+		
 		var cpath = '${cpath}'
 		const sockJS = new SockJS(cpath + '/endpoint') // WebSocket 엔드포인트 설정
 		const stomp = Stomp.over(sockJS)
@@ -966,6 +990,23 @@ h1, h2 {
 			const result = await fetch(url).then(resp => resp.json())
 			const userProfile = document.getElementById('ch_user_profile')
 			userProfile.src = cpath + '/upload/' + result.profile
+		}
+		
+		function toTopHandler() {
+			window.scrollTo(0, 0)
+		}
+		
+		window.onscroll = function() {
+			let scrollY = window.scrollY
+			const toTop = document.getElementById('ch_top_arrow')
+			if(scrollY >= 200) {
+				toTop.style.zIndex = 4
+				toTop.style.opacity = 1
+			}
+			else {
+				toTop.style.zIndex = -10
+				toTop.style.opacity = 0
+			}
 		}
 		
 		document.addEventListener('DOMContentLoaded', ChUserProfileImgHandler)
