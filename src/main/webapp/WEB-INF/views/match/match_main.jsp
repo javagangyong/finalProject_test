@@ -6,11 +6,9 @@
    .matchBtn {
 /*       border: 1px solid black;  */
 	  position: absolute;
-  	  left: 670px;
 	  bottom: 62px;
-	  
-      
-  
+	  left: 50%;
+      transform: translate(-50%);
    }
    
    #matchStart {
@@ -40,6 +38,7 @@
    		background-image: url('${cpath}/resources/image/duoScreen.png');
    		background-size: 1700px auto;
    		background-repeat: no-repeat;
+   		background-position: center;
    		position: relative;
    }
 /*    .font { */
@@ -51,6 +50,10 @@
 /*    	  	left: 770px; */
 /*    	  	bottom: 50px; */
 /*    } */
+
+footer {
+	position: relative !important;
+}
 </style>
 
 
