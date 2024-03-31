@@ -104,7 +104,7 @@
     			align-items: center;
             	border-radius: 5px;
         	}
-            .find{
+            #findIDForm{
             	all: unset;
 	    		width: 150px;
 	    		height: 40px;
@@ -127,7 +127,7 @@
             <body>
                 <h2 align="center" style="font-weight: 200;">ID 찾기</h2>
                 <div>
-                    <form id="find">
+                    <form id="findIDForm">
                         <p><input class="inputframe" type="text" name="username" placeholder="이름"></p>
                         <p><input class="inputframe" type="email" name="email" placeholder="이메일"></p>
                         <input class="find"style="margin-top: 10px;" type="submit" value="찾기">
