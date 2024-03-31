@@ -52,7 +52,7 @@ aside>div.item:hover {
 div.content {
    position: relative;
    top: 150px;
-   left: -20%;
+   left: -88%;
    justify-content: center;
    align-items: center;
 }
@@ -100,7 +100,7 @@ input[type="radio"] {
 }
 
 input[type="radio"]:checked+span {
-   background-color: blue;
+   background-color: #105dae;
 }
 
 .radiotext {
@@ -124,6 +124,7 @@ button:hover {
 
 #mpmodifyForm>* {
    margin-top: 15px;
+   width: 501px;
 }
 
 p {
@@ -151,7 +152,7 @@ p {
    width: 400px;
    height: 50px;
    border: 1px solid lightgrey;
-   background-color: blue;
+   background-color: #105dae;
    font-size: 20px;
    color: white;
    text-align: center;
@@ -202,7 +203,7 @@ input[type="radio"] {
 
 input[type="radio"]:checked+.resText {
    color: white;
-   background-color: blue;
+   background-color: #105dae;
 }
 
 .wrap {
@@ -345,7 +346,9 @@ textarea.introduce {
    		color: black;
    		font-size: 16px;
        }
-       
+    #specForm{
+    	transform: translateY(600px);
+    }   
 </style>
 
 <section id="root">
@@ -457,7 +460,7 @@ textarea.introduce {
 
             tag += '<div class="mpmodify">';
             tag += '    <div class="mpmodify_inner">';
-            tag += '        <h1 align="center">회원 정보 수정</h1>';
+            tag += '        <h1 style="padding-left: 160px;">회원 정보 수정</h1>';
             tag += '        <div>';
             tag += '            <form id="mpmodifyForm">';
             tag += '                <input class="inputframe" type="text" value="' + '${login.userid}' + '" name="userid" readonly required>';
@@ -721,7 +724,7 @@ textarea.introduce {
       
       
         var tag = "";
-        tag += '<form method="POST" enctype="multipart/form-data">';
+        tag += '<form id="specForm" method="POST" enctype="multipart/form-data">';
         tag += '    <div>';
         tag += '        <h2>신장</h2>';
         tag += '        <input class="numberInput" type="number" name="height" value="' + dto.height + '">';
