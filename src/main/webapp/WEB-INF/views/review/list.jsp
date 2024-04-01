@@ -69,6 +69,10 @@
 		color: black;
 		width: 30px;
 	}
+	footer {
+         position: absolute !important;
+         bottom: -1400px !important;
+      }
 </style>
 
 <section>

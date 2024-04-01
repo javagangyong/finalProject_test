@@ -114,6 +114,10 @@
    		margin: 17px auto;
    	
    	}
+   	footer {
+    position: absolute !important;
+    bottom: -2350px !important;
+}
 }
 </style>
 
@@ -188,5 +192,6 @@
 		</div>
 	</div>
 </section>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

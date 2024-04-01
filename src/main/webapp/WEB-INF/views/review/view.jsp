@@ -127,6 +127,10 @@ textarea[name="content"] {
 	margin: 60px auto;
 
 }
+footer {
+    position: absolute !important;
+    bottom: -1700px !important;
+}
 
 </style>
 
@@ -334,6 +338,6 @@ textarea[name="content"] {
 
 		
 </script>
-
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

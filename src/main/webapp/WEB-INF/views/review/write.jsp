@@ -21,7 +21,7 @@
 	#marriageReview_inner{
 	    width: 750px;
 	    height: 750px;
-	    border: 1px solid grey;
+/* 	    border: 1px solid grey; */
 	    margin: 50px auto;
 	}
 	textarea[name="content"]{
@@ -29,6 +29,11 @@
 		height: 400px;
 		resize: none;
 	}
+	footer {
+        position: absolute !important;
+        bottom: -1000px !important;
+    }
+
 </style>
 <section>
 	<div>
@@ -47,5 +52,6 @@
 
 </section>
 
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

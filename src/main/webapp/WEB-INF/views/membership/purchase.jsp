@@ -82,6 +82,10 @@
          font-size: 16.5px;
          text-align: center;
    }
+   footer {
+    position: absolute !important;
+    bottom: -1200px !important;
+	}
 
    
 
@@ -224,6 +228,6 @@ vipBtn.onclick = vipRequestPay
 </script>
 
 
-
+<%@ include file="../footer.jsp" %>
 </body>
 </html>
