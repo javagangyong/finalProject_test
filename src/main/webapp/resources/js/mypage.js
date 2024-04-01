@@ -17,10 +17,6 @@ function previewHandler(event) {
 
 // 마이 프로필 로딩 함수
 const myProfileLoadHandler = async function(event) {
-	  const footer = document.querySelector('footer')
-	  if(footer != null) {
-		  footer.classList.remove('whenSpec')
-	  }
 	  const items = document.querySelectorAll('.item')
 	  items.forEach(e => e.classList.remove('selected'))
 	  event.target.classList.toggle('selected')
@@ -82,10 +78,6 @@ const myProfileLoadHandler = async function(event) {
 
 // 정보 수정 관련(수정, 탈퇴, 비밀번호 변경)
 const myInfoLoadHandler = function(event) {
-	const footer = document.querySelector('footer')
-	if(footer != null) {
-		footer.classList.remove('whenSpec')
-	}
 	const items = document.querySelectorAll('.item')
 	items.forEach(e => e.classList.remove('selected'))
 	event.target.classList.toggle('selected')
@@ -338,8 +330,6 @@ const selectHandler = function() {
 
 // 스펙 수정 관련
 async function specModify(event) {
-	const footer = document.querySelector('footer')
-	footer.classList.add('whenSpec')
 	const items = document.querySelectorAll('.item')
 	items.forEach(e => e.classList.remove('selected'))
 	event.target.classList.toggle('selected')
