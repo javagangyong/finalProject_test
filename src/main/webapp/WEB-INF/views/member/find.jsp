@@ -38,6 +38,22 @@
 		background-color: lightskyblue;
 	}
 	
+	.findnewpw {
+		all: unset;
+		width: 200px;
+		height: 50px;
+		border: 2px solid skyblue;
+		border-radius: 12px;
+		text-align: center;
+		font-weight: 300;
+		font-size: 20px;
+		margin-bottom: 10px;
+	}
+	.findnewpw:hover {
+		cursor: pointer;
+		background-color: lightskyblue;
+	}
+	
 	p {
 		margin: 0;
 	}
@@ -53,9 +69,11 @@
 		align-items: center;
 		flex-direction: column;
 	}
+	
 	.inputframe{
-		width: 150px;
+		width: 300px;
 		height: 60px;
+ 		margin: 10px;
 		border: 1px solid lightgrey;
 		box-sizing: border-box;
 		padding: 5px 10px;
@@ -85,12 +103,19 @@
             <html>
             <head>
             <style>
-        	#find{
-        		position: fixed;
+        	.find{
+        		all: unset;
+        		position: absolute;
+        		margin-top: 20px;
     			top: 50%;
     			left: 50%;
     			transform: translate(-50%, -50%);
-        		        		
+        		border: 2px solid skyblue;
+        		border-radius: 12px;
+        		width: 100px;
+        		height: 30px;
+        		font-size: 20px;
+        		text-align: center;			
         	}
             .inputframe{
         		width: 250px;
@@ -108,7 +133,6 @@
             	all: unset;
 	    		width: 150px;
 	    		height: 40px;
-	    		border: 2px solid skyblue;
 	    		border-radius: 12px;
 	    		text-align: center;
 	    		font-weight: 300;
@@ -130,7 +154,7 @@
                     <form id="findIDForm">
                         <p><input class="inputframe" type="text" name="username" placeholder="이름"></p>
                         <p><input class="inputframe" type="email" name="email" placeholder="이메일"></p>
-                        <input class="find"style="margin-top: 10px;" type="submit" value="찾기">
+                        <input class="find" type="submit" value="찾기">
                     </form>
                 </div>
             </body>
@@ -166,16 +190,20 @@
 <script>
    const sec = document.querySelector('section')
    const findPW = document.getElementById('findPW')
+   
+   
+   
+   
    findPW.onclick = () => {
       sec.innerHTML = ''
       let tag = ''
       tag += '<h2 align="center" style="font-weight: 200;">PW찾기</h2>'
       tag += '<div>'
       tag += '   <form>'
-      tag += '      <p><input type="text" name="userid" placeholder="ID"></p>'
-      tag += '      <p><input type="text" name="username" placeholder="NAME"></p>'
-      tag += '      <p><input type="email" name="email" placeholder="EMAIL"></p>'
-      tag += '      <input style="margin-top: 10px;" type="submit" value="찾기">'
+      tag += '      <p><input class="inputframe" type="text" name="userid" placeholder="ID"></p>'
+      tag += '      <p><input class="inputframe" type="text" name="username" placeholder="NAME"></p>'
+      tag += '      <p><input class="inputframe" type="email" name="email" placeholder="EMAIL"></p>'
+      tag += '      <input class="findnewpw" name="verify" type="submit" value="제출하기">'
       tag += '   </form>'
 //       tag += '   <div style="display: flex; width: 300px; margin: 10px auto;">'
 //       tag += '      <input type="text" name="verify" placeholder="인증번호 입력" disabled="true">'
