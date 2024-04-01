@@ -28,9 +28,10 @@ public class MatchController {
 	private ChatService cs;
 
 	@GetMapping("/match_main")
-	public ModelAndView matchMain(@RequestParam String userid) {
+	public ModelAndView matchMain(HttpSession session) {
 		ModelAndView mav = new ModelAndView("/match/match_main");
-		MemberDTO dto = ms.getMyInfo(userid);
+		MemberDTO login = (MemberDTO) session.getAttribute("login");
+		MemberDTO dto = ms.getMyInfo(login.getUserid());
 		mav.addObject("dto", dto);
 		return mav;
 	}

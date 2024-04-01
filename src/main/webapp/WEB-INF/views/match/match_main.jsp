@@ -35,7 +35,7 @@
    		width: 100%;
    		height: 669px;
    		margin-top: 93px;
-   		background-image: url('${cpath}/resources/image/duoScreen.png');
+   		background-image: url('${cpath}/resources/image/duoScreen2.png');
    		background-size: 1700px auto;
    		background-repeat: no-repeat;
    		background-position: center;
@@ -54,11 +54,53 @@
 footer {
 	position: relative !important;
 }
+
+@font-face {
+    font-family: 'TTLaundryGothicB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2403-2@1.0/TTLaundryGothicB.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+.mainFont, .mainFont2 {
+	font-family: 'TTLaundryGothicB', sans-serif;
+	color: white;
+	
+}
+.mainFont {
+	  position: absolute;
+	  bottom: 423px;
+	  left: 49%;
+	  transform: translate(-48%);	
+	  font-size: 53px;
+	  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+}
+.mainFont2 {
+	  position: absolute;
+	  bottom: 372px;
+	  left: 51%;
+	  transform: translate(-53%);	
+	  font-size: 40px;
+	  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.mainFont3 {
+	  position: absolute;
+	  bottom: 297px;
+	  left: 51%;
+	  transform: translate(-55%);	
+	  font-size: 24px;
+	  color: white;
+}
+
 </style>
 
 
 
 <section id="match_main_section">
+	<div class="mainFont">이거 누르면</div>
+	<div class="mainFont2">우리 사귀는거다?</div>
+	<div class="mainFont3">매칭 프로필 확인하기</div>
 	<div class="matchBtn">
 	   <form method="POST">
 	      <input type="hidden" name="userid" value="${dto.userid }">
