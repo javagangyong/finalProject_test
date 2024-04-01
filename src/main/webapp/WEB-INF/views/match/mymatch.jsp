@@ -192,6 +192,11 @@
 		top: 125px;
 	}
 	
+	footer {
+		position: absolute !important;
+	    bottom: -800px !important;
+	}
+	
 </style>
 <script src="${cpath }/resources/js/mymatch.js"></script>
 <section class="myframe">
@@ -241,6 +246,4 @@
 </div>
 
 <%@ include file="../footer.jsp" %>
-</body>
-</html>
 
