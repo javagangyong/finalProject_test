@@ -9,6 +9,8 @@ function profileToggle() {
 }
 
 
+
+
 async function kdprofileLoadHandler(event) {
       let oponent = event.target.getAttribute('value')
       const profile = document.getElementById('ch_oponent_profile')

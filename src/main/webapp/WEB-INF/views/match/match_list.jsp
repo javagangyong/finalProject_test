@@ -24,15 +24,17 @@
 /*       border: 1px solid black; */
        width: 1200px;
        height: 100%;
-       margin: auto;
-       padding-top: 20px;
-       position: relative;
+       padding-top: 100px;
+       position: absolute;
+       left: 50%;
+       transform: translate(-50%);
+       transition-duration: 1s;
    }
    
    #matchList {
       display: flex;
-      flex-flow: wrap;
-      margin: auto;
+      width: fit-cotent;
+      padding: 0 10px;
    }
    
    .matchContent {
@@ -41,18 +43,19 @@
    }
    
    .matchImg {
-      background-size: auto 100%;
+      background-size: cover;
+      border-radius: 8px;
       display: block;
       width: 340px;
       height: 440px;
+      box-shadow: 1px 3px 12px ${login.gender == '남성' ? 'hotpink' : 'skyblue'};
       cursor: pointer;
    }
    
    .matchContent > div {
       text-align: center;
    } 
-    
-    
+        
     .alreadyMatch {
 /*        position: absolute; */
 /*        bottom: 10px; */
@@ -63,14 +66,6 @@
 /*        width: 192px; */
 /*        height: 60px; */
     }
-    
-    
-    
-    
-    
-    
-    
-    
     
    	#ch_oponent_profile {
 		position: fixed;
@@ -110,7 +105,7 @@
 		height: 0px;
 		background-color: white;
 		z-index: 4;
-		transition-duration: 1s;
+		transition-duration: 0.5s;
 	}
 	
 	.ch_height_toggle {
@@ -131,7 +126,7 @@
 		width: 350px;
 		height: 350px;
 		border-radius: 50%;
-		box-shadow: 1px 1px 15px grey inset;
+		box-shadow: 1px 1px 15px grey inset;,
 		background-size: cover;
 		background-repeat: no-repeat;
 		background-position: center;
@@ -204,31 +199,79 @@
 	}
 	
 	
-	
-	
-	
-	
-	
 	.possibleMatch {
 		position: absolute;
-		right: 65px;
-		top: 0px;
+		width: 215px;
+		top: 20%;
+		right: 13%;
 	}
 
+	#ch_left_wall {
+		position: absolute;
+    	width: 284px;
+    	height: 100%;
+    	background-color: white;
+    	top: 0;
+    	left: 0;
+    	z-index: 3;
+	}
+	
+	#ch_right_wall {
+		position: absolute;
+    	width: 263px;
+    	height: 100%;
+    	background-color: white;
+    	top: 0;
+    	right: 0;
+    	z-index: 3;
+	}
+	
+	#ch_left_slide {
+		all: unset;
+		font-size: 60px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	
+	#ch_right_slide {
+		all: unset;
+		font-size: 60px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	
+	#ch_left_slide:hover,
+	#ch_right_slide:hover {
+		opacity: 0.5;
+	}
+	
+	footer {
+		position: static !important;
+	}
 </style>
+<div class="possibleMatch"></div>
 
+<div id="ch_left_wall">
+	<button value="0" id="ch_left_slide" onclick="leftSlideHandler()">🖜</button>
+</div>
+<div id="ch_right_wall">
+	<button value="1" id="ch_right_slide" onclick="rightSlideHandler()">🖝</button>
+</div>
 <section id="match_list_section">
    <div>
       <h1 style="text-align: center;">추천 매칭 상대</h1>
       <span id="kdnocontent"></span>
    </div>
    <div class="matchListBox">
-   	  <div class="possibleMatch"></div>
       <div id="matchList">
          <c:forEach var="dto" items="${list }">
             <div class="matchContent">
                <div onclick="kdprofileLoadHandler(event)" class="matchImg" value="${dto.userid }" style="background-image: url('${cpath}/upload/${dto.profile}');"></div>
-               <div>이름 : ${dto.username }</div>
+               <div style="margin-top: 15px;">이름 : ${dto.username }</div>
                <div>${dto.birthYear }년 ${dto.birthMonth }월 ${dto.birthDay }일생</div>
                <div>등급 : ${dto.grade }</div>
             </div>
@@ -242,11 +285,46 @@
 </div>
 
 <div id="ch_profile_overlay">
-
+	
 </div>
 
 <div id="kdoverlay" class="hidden"></div>
+<script>	
+function leftSlideHandler() {
+    const matchListBox = document.querySelector('.matchListBox');
+    if (!matchListBox.style.left) {
+        matchListBox.style.left = '50%';
+        return;
+    }
+    let first = matchListBox.children[0].children[0].getBoundingClientRect().left + window.pageXOffset;
+    
+    if(first <= 300 && first >= 200) {
+    	return;
+    }
+    
+    let currentLeft = parseFloat(matchListBox.style.left) || 0;
+    let newLeft = currentLeft + 71 + '%';
+    matchListBox.style.left = newLeft;
+}
 
 
+function rightSlideHandler() {
+    const matchListBox = document.querySelector('.matchListBox');
+
+    // 초기에 50%로 설정
+    if (!matchListBox.style.left) {
+        matchListBox.style.left = '50%';
+    }
+
+    let last = matchListBox.children[0].lastElementChild.getBoundingClientRect().left + window.pageXOffset;
+    let currentLeft = parseFloat(matchListBox.style.left) || 0;
+    let newLeft = currentLeft - 71 + '%';
+    matchListBox.style.left = newLeft;
+    if (last <= 1450) {
+        matchListBox.style.left = '50%';
+    }
+}
+</script>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

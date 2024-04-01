@@ -42,7 +42,7 @@ header {
 	position: fixed;
 	background-color: white;
 	color: black;
-	z-index: 1;
+	z-index: 5;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -877,7 +877,7 @@ h1, h2 {
 			<div>
 				<ul>
 					<li class="link" id="match_mainLink" category="match"><a
-						href="${cpath}/match/match_main?userid=${login.userid}">매칭 홈</a></li>
+						href="${cpath}/match/match_main">매칭 홈</a></li>
 					<li class="link"><a href="${cpath }/match/mymatch">매칭 현황</a></li>
 					<!-- 					<li>테스트</li> -->
 					<!-- 					<li>테스트</li> -->
@@ -983,6 +983,7 @@ h1, h2 {
 
 		if (user != '') {
 			stomp.connect({}, chatListLoadHandler)
+			document.addEventListener('DOMContentLoaded', ChUserProfileImgHandler)
 		}
 		
 		async function ChUserProfileImgHandler() {
@@ -1009,5 +1010,4 @@ h1, h2 {
 			}
 		}
 		
-		document.addEventListener('DOMContentLoaded', ChUserProfileImgHandler)
 	</script>

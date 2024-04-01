@@ -69,7 +69,7 @@
    		top: 155%;
    		left: 50%;
    		transform: translate(-50%, -50%);
-   		z-index: 5;
+   		z-index: 3;
    }
    
    #ch_member_text > h1 {
@@ -116,6 +116,6 @@
 	    setInterval(profileSlideHandlerM, 10);
 	});
 </script>
-
+<%@ include file="footer.jsp" %>
 </body>
 </html>

@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp"%>
+<script src="${cpath }/resources/js/join.js"></script>
 <style>
-/* 다빈이가 한 주석처리 */
 header {
 	color: black;
 }
@@ -173,6 +173,10 @@ p {
 	position: relative;
 }
 
+footer {
+   position: absolute;
+   bottom: -90% !important;
+}
 </style>
 
 <section>
@@ -349,134 +353,21 @@ p {
 	</div>
 </section>
 <script>
-	const check = document.getElementById('check')
-	const joinBtn = document.getElementById('joinBtn')
-	async function IdCheckHandler(event) {
-		var userid = event.target.value
-		var lengthCheck = userid.length >= 4
-		if(userid.length > 10) {
-			event.target.value = event.target.value.slice(0, 10)
-		}
-		var combCheck = /^[a-zA-Z0-9]+$/.test(userid)
-		var prefixCheck = /^[a-zA-Z]{4}/.test(userid)
-		
-		const url = '${cpath}/duplicateCheck?userid=' + userid
-		const duplicateCheck = await fetch(url)
-			.then(resp => resp.text())
-			.then(text => {
-				if(text == 1) {
-					return false
-				}
-				else {
-					return true
-				}
-			})
-		const duplicate = document.getElementById('duplicate')
-		if(lengthCheck && combCheck && prefixCheck && duplicateCheck) {
-			check.innerText = '✅'
-			joinBtn.disabled = false
-			duplicate.style.display = 'none'
-		}
-		else {
-			check.innerText = '❌︎'
-			joinBtn.disabled = true
-			if(!duplicateCheck) {
-				duplicate.style.display = 'block'
-			}
-			else {
-				duplicate.style.display = 'none'
-			}
-		}
-	}
 	const IdInput = document.querySelector('input[name="userid"]')
 	IdInput.addEventListener('keyup', IdCheckHandler)
 	
-	function PasswordCheckHandler(event){
-		var password = event.target.value
-		var regex = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{8,15}$/;
-		var pwCheck = regex.test(password)
-		const pwLength = document.getElementById('pwLength')
-		if(pwCheck){
-			joinBtn.disabled = false
-			pwLength.classList.add('hidden')
-		}
-		else {
-			joinBtn.disabled = true
-			pwLength.classList.remove('hidden')
-		}
-	}
+	
 	const pwInput = document.querySelector('input[name="userpw"]')
 	pwInput.addEventListener('keyup', PasswordCheckHandler)
 	
 	const mailBtn = document.getElementById('mailBtn')
 	const authBtn = document.getElementById('authBtn')
-	const mailAuth = document.querySelector('.mailAuth')
-	const mailSend = document.querySelector('.mailSend')
+	
 	
 	let limit = 300
 	
-	mailBtn.onclick = async function(event){
-		event.preventDefault()
-		limit = 300
-		const url = '${cpath}/ajax/sendMail'
-		const opt = {
-			method: 'POST',
-			body: JSON.stringify({
-				address: mailSend.querySelector('input[name="email"]').value
-			}),
-			headers: {
-				'Content-Type': 'application/json;charset=utf-8'
-			}
-		}
-		const result = await fetch(url, opt).then(resp => resp.text())
-		const message = mailSend.querySelector('p.mailMessage')
-		if(result == 1){
-			message.innerText = '인증번호를 발송하였습니다'
-			message.style.color = '#105dae'
-			mailAuth.classList.remove('hidden')
-			const timer = document.getElementById('timer')
-			
-			
-			function countDownHandler() {
-				limit--
-				timer.innerText = '남은 시간 : ' + '0' + Math.floor(limit / 60) + ':' + (limit % 60 < 10 ? 0 : '') + Math.floor(limit % 60)
-				if(limit == 0) {
-					clearInterval(timering)
-				}
-			}
-			
-			const timering = setInterval(countDownHandler, 1000)
-		}
-		else {
-			message.innerText = '메일을 보낼 수 없습니다'
-			message.style.color = 'red'
-		}
-	}
-	
-	
-	
-	
-	authBtn.onclick = async function(event){
-		event.preventDefault()
-		const inputNumber = mailAuth.querySelector('input[name="authNumber"]').value
-		const url = '${cpath}/ajax/authNumber/' + inputNumber
-		const result = await fetch(url).then(resp => resp.text())
-		const message = mailAuth.querySelector('p.mailMessage')
-		
-		if(result == 1){
-			message.innerText = '인증 성공'
-			message.style.color = '#105dae'
-			mailBtn.disabled = true
-			authBtn.disabled = true
-			document.getElementById('timer').style.display = 'none'
-			joinBtn.disabled = false
-		}
-		else {
-			message.innerText = '인증 실패'
-			message.style.color = 'red'
-			joinBtn.disabled = true
-		}
-	}
+	mailBtn.onclick = emailSendHandler
+	authBtn.onclick = authNumberCheckHandler
 	
 	joinBtn.addEventListener('click', (event) => {
 		const message = mailAuth.querySelector('p.mailMessage')
@@ -486,6 +377,6 @@ p {
 		}
 	})
 </script>
-
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

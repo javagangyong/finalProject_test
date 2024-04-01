@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp" %>
-<script src="${cpath }/resources/js/mymatch.js"></script>
 <style>
 	.matchingList {
 		display: flex;
@@ -181,11 +180,6 @@
 		background-color: rgb(135, 206, 235, 0.4);
 	}
 	
-	
-	
-	
-	
-	
 	.myframe {
 		width: 900px;
 		margin: 0 auto;
@@ -199,7 +193,7 @@
 	}
 	
 </style>
-
+<script src="${cpath }/resources/js/mymatch.js"></script>
 <section class="myframe">
 	<h2 style="font-weight: 300; text-align: center;">매칭 현황</h2>
 	<div class="possibleMatch">dd</div>
@@ -223,8 +217,8 @@
 						${match.matched == 0 ? '매칭 대기' : (match.matched == 1 ? '매칭중' : (match.matched == 2 ? '매칭거부' : '매칭종료')) }
 					</span>
 					<span class="ch_match_btns ${match.matched != 0 or match.reqUser == login.userid ? 'hidden' : '' }">
-						<a value="${match.reqUser }" href="${cpath }/match/accept?reqUser=${match.reqUser}"><button class="accept">수락</button></a>
-						<a value="${match.reqUser }" href="${cpath }/match/deny?reqUser=${match.reqUser}"><button class="deny">거절</button></a>
+						<a value="${match.reqUser }" href="${cpath }/match/accept?reqUser=${match.reqUser}"><button class="accept" onclick="acceptHandler(event)">수락</button></a>
+						<a value="${match.reqUser }" href="${cpath }/match/deny?reqUser=${match.reqUser}"><button class="deny" onclick="denyHandler(event)">거절</button></a>
 					</span>
 				</li>
 			</ul>
@@ -241,19 +235,12 @@
 	const matching = '${matching}'
 		
 	document.addEventListener('DOMContentLoaded', function() {
-		const denyBtns = document.querySelectorAll('.deny')
-		denyBtns.forEach(btn => btn.onclick = denyHandler)
-	})
-	
-	document.addEventListener('DOMContentLoaded', function() {
-		const acceptBtns = document.querySelectorAll('.accept')
-		acceptBtns.forEach(btn => btn.onclick = acceptHandler)
-	})
-	
-	document.addEventListener('DOMContentLoaded', function() {
     setTimeout(showMatchSuccess, 500)
 	})
 </script>
 </div>
+
+<%@ include file="../footer.jsp" %>
 </body>
 </html>
+

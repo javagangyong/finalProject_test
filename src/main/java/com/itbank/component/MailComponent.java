@@ -30,7 +30,7 @@ public class MailComponent {
 	
 	private Properties props;
 	
-	@Value("classpath:mailForm.html")
+	@Value("classpath:mail/mailForm.html")
 	private Resource mailForm;
 	
 	@PostConstruct
