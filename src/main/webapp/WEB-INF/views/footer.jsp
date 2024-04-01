@@ -10,14 +10,16 @@ a {
 	text-decoration: none;
 	color: inherit;
 }
-footer {
-	background-color: #003458;
-	color: white;
- 	height: 100%;
-	padding: 0;
-	margin: 600px auto 0;
-  	
-}
+ footer { 
+/*     position: absolute;  */
+    bottom: 0;  
+    left: 0;
+    width: 100%; 
+    background-color: #003458; 
+    color: white; 
+    height: 480px; 
+  	padding: 0;      
+ } 
 #policyList {
 /* 	width: 1395px; */
 	display: flex;
@@ -39,7 +41,7 @@ footer {
 	padding-left: 30px;
 }
 .footerSection {
-	padding-top: 95px;
+	padding-top: 35px;
     width: 100%;
     height: 400px;
 }

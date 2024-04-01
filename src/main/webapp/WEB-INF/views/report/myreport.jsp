@@ -174,7 +174,12 @@ div.tablePosition>h2 {
 } 
 #reportList td:nth-child(5) {
   width: 15%;
-} 
+}
+
+footer {
+	position: absolute !important;
+	bottom: -70% !important;
+}
 
 </style>
 
@@ -416,12 +421,4 @@ div.tablePosition>h2 {
 
 
 
-
-
-
-
-
-
-
-</body>
-</html>
+<%@ include file="../footer.jsp" %>

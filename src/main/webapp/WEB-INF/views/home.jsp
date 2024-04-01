@@ -77,6 +77,12 @@
    		font-weight: bold;
    		text-align: center;
    }
+   
+   footer {
+       position: absolute;
+      bottom: -50%;
+       
+   }
 </style>
 <script src="${cpath }/resources/js/home.js"></script>
 <section id="ch_main">

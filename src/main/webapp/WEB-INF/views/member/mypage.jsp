@@ -355,6 +355,10 @@
 	#specForm {
 		transform: translateY(600px);
 	}
+	footer {
+ 		position: absolute; 
+		bottom: -70% !important;
+	}
 </style>
 <script>
 	var joinDate = '${login.joinDate}'
@@ -405,5 +409,4 @@
 </script>
 
 
-</body>
-</html>
+<%@ include file="../footer.jsp" %>
