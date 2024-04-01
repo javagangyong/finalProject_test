@@ -364,6 +364,10 @@
 	footer.whenSpec {
 		bottom: -1850px !important;
 	}
+	
+	#specmodifyBtn {
+		margin-bottom: 50px;
+	}
 </style>
 <script>
 	var joinDate = '${login.joinDate}'
