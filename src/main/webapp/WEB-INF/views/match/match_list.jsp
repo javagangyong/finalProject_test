@@ -105,7 +105,7 @@
 		height: 0px;
 		background-color: white;
 		z-index: 4;
-		transition-duration: 0.5s;
+		transition-duration: 1.2s;
 	}
 	
 	.ch_height_toggle {
@@ -208,7 +208,7 @@
 
 	#ch_left_wall {
 		position: absolute;
-    	width: 284px;
+    	width: 16%;
     	height: 100%;
     	background-color: white;
     	top: 0;
@@ -218,7 +218,7 @@
 	
 	#ch_right_wall {
 		position: absolute;
-    	width: 263px;
+    	width: 15%;
     	height: 100%;
     	background-color: white;
     	top: 0;
