@@ -362,7 +362,7 @@
 	}
 	
 	footer.whenSpec {
-		bottom: -1800px !important;
+		bottom: -1850px !important;
 	}
 </style>
 <script>

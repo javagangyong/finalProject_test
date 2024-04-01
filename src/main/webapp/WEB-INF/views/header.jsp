@@ -32,6 +32,8 @@ body {
 	margin: 0;
 	font-family: 'Noto Sans KR', sans-serif;
 	overflow-x: hidden;
+	width: 100%;
+	height: 100%;
 }
 
 body, h1, h2, h3, h4, h5, h6, input, textarea, select, pre {
