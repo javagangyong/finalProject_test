@@ -8,9 +8,9 @@ header {
 }
 
 #ch_join_section {
-	padding-top: 95px;
+	padding-top: 60px;
 	width: 100%;
-	height: 920px;
+	height: 1300px;
 	display: flex;
 	justify-content: center;
 }
@@ -173,10 +173,6 @@ p {
 	position: relative;
 }
 
-footer {
-   position: absolute;
-   bottom: -90% !important;
-}
 </style>
 
 <section id="ch_join_section">
@@ -377,6 +373,5 @@ footer {
 		}
 	})
 </script>
-<%@ include file="../footer.jsp" %>
 </body>
 </html>

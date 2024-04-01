@@ -4,7 +4,6 @@
 
 <style>
    .matchBtn {
-/*       border: 1px solid black;  */
 	  position: absolute;
 	  bottom: 62px;
 	  left: 50%;
@@ -41,15 +40,6 @@
    		background-position: center;
    		position: relative;
    }
-/*    .font { */
-/*    	  	font-family: '새굴림'; */
-/*    	  	font-weight: 700; */
-/*    	  	font-size: 40px; */
-/*    	  	color: white; */
-/*    	  	position: absolute; */
-/*    	  	left: 770px; */
-/*    	  	bottom: 50px; */
-/*    } */
 
 footer {
 	position: relative !important;
@@ -109,9 +99,6 @@ footer {
 	      <input type="submit" id="matchStart" value="start ›">
 	   </form>
 	</div>
-<!-- 	<div class="font"> -->
-<!-- 		이거 누르면 -->
-<!-- 	</div> -->
 </section>
 
 <script>
