@@ -104,7 +104,6 @@ footer {
 	<div class="matchBtn">
 	   <form method="POST">
 	      <input type="hidden" name="userid" value="${dto.userid }">
-	      <input type="hidden" name="username" value="${dto.username }">
 	      <input type="hidden" name="gender" value="${dto.gender }">
 	      <input type="hidden" name="grade" value="${dto.grade }">
 	      <input type="submit" id="matchStart" value="start ›">
