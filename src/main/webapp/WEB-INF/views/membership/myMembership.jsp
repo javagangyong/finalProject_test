@@ -3,7 +3,7 @@
 <%@ include file="../header.jsp" %>
 
 <style>
-    section {
+    #mymembership {
         padding-top: 95px;
         width: 100%;
         height: 500px;
@@ -11,7 +11,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        border: 1px solid grey;
+/*         border: 1px solid grey; */
          
     }
     
@@ -27,7 +27,7 @@
     }
     
     #refundBtn {
-        margin-top: 20px;
+        margin: 10px auto;
         width: 300px;
         height: 50px;
         border: 2px solid pink;
@@ -47,9 +47,14 @@
        color: white;
     }
     .box {
-       width: 50%;
+       width: fit-content;
+       padding: 0 10px;
        box-shadow: 1px 1px 10px grey inset;
        border-radius: 10px;
+    }
+    footer {
+    	position: absolute !important;
+    	bottom: -300px !important;
     }
 </style>
 
@@ -57,7 +62,7 @@
 
 
 
-<section>
+<section id="mymembership">
     <h3 align="center">결제 내역</h3>
     <div class="box">
        <table id="pay" border="1" cellpadding="10" cellspacing="0">
@@ -114,6 +119,6 @@
 
    refundBtn.addEventListener('click', cancelPay)
 </script>
-
+<%@ include file="../footer.jsp" %>
 </body>
 </html>
