@@ -79,8 +79,8 @@
    }
    
    footer {
-       position: absolute;
-      bottom: -50%;
+       position: absolute !important;
+       bottom: -1590px !important;
        
    }
 </style>
