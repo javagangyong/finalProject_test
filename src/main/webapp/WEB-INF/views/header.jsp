@@ -825,7 +825,7 @@ h1, h2 {
 
 #ch_top_arrow {
 	position: fixed;
-	bottom: 12%;
+	bottom: 100px;
 	right: 30px;
 	width: 50px;
 	height: 50px;
@@ -840,7 +840,6 @@ h1, h2 {
 	cursor: pointer;
 	transition-duration: 1s;
 }
-#ch_top_arrow
 </style>
 </head>
 <body>

@@ -355,9 +355,14 @@
 	#specForm {
 		transform: translateY(600px);
 	}
+	
 	footer {
- 		position: absolute; 
-		bottom: -70% !important;
+ 		position: absolute !important; 
+		bottom: -600px !important;
+	}
+	
+	footer.whenSpec {
+		bottom: -1800px !important;
 	}
 </style>
 <script>

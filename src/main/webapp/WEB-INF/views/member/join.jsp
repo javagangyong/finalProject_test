@@ -7,7 +7,7 @@ header {
 	color: black;
 }
 
-section {
+#ch_join_section {
 	padding-top: 95px;
 	width: 100%;
 	height: 920px;
@@ -179,7 +179,7 @@ footer {
 }
 </style>
 
-<section>
+<section id="ch_join_section">
 	<div class="join_inner">
 		<div>
 			<h1 style="text-align: center;">회원가입</h1>
