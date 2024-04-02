@@ -298,6 +298,14 @@
 		cursor: pointer;
 		background: skyblue;
 	}
+	
+	#ch_profile_close {
+		all: unset;
+		font-size: 15px;
+		font-weight: bold;
+		cursor: pointer;
+		
+	}
 </style>
 
 
@@ -364,6 +372,9 @@
 		<pre id="userIntroduce_inner">
 		
 		</pre>
+	</div>
+	<div style="width: 100%; display: flex; justify-content: center;">	
+		<button id="ch_profile_close" onclick="profileCloseHandler()">닫기</button>
 	</div>
 </div>
 <div class="userInfo_overlay hidden"></div>

@@ -154,3 +154,9 @@ async function stampHandler() {
 		stamp.innerText = grade
 	}
 }
+
+function profileCloseHandler() {
+	overlay.classList.toggle('hidden')
+	userInfo.style.transitionDuration = 'unset'
+	userInfo.style.top = '200%'
+}
