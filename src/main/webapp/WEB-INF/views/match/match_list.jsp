@@ -33,7 +33,7 @@
    
    #matchList {
       display: flex;
-      width: fit-cotent;
+      width: fit-content;
       padding: 0 10px;
    }
    
@@ -67,19 +67,19 @@
 /*        height: 60px; */
     }
     
-   	#ch_oponent_profile {
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		box-shadow: 1px 1px 15px ${login.gender == '남성' ? 'hotpink' : 'skyblue'};
-		border-radius: 15px;
-		width: 35%;
-		height: 0px;
-		z-index: 5;
-		transition-duration: 1.2s;
-		overflow-y: hidden;
-	}
+	 #ch_oponent_profile {
+	      position: fixed;
+	      top: 50%;
+	      left: 50%;
+	      transform: translate(-50%, -50%);
+	      box-shadow: 1px 1px 15px ${login.gender == '남성' ? 'hotpink' : 'skyblue'};
+	      border-radius: 15px;
+	      width: 35%;
+	      height: 0px;
+	      z-index: 6;
+	      transition-duration: 1.2s;
+	      overflow-y: hidden;
+	   }
 	
 	#ch_oponent_profile > div {
 		width: 100%;
@@ -96,17 +96,17 @@
 	}
 	
 	#ch_profile_overlay {
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		border-radius: 15px;
-		width: 35%;
-		height: 0px;
-		background-color: white;
-		z-index: 4;
-		transition-duration: 0.5s;
-	}
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 15px;
+      width: 35%;
+      height: 0px;
+      background-color: white;
+      z-index: 5;
+      transition-duration: 1.2s;
+   }
 	
 	.ch_height_toggle {
 		height: 96% !important;
@@ -228,8 +228,9 @@
 	
 	#ch_left_slide {
 		all: unset;
-		font-size: 60px;
 		position: absolute;
+		width: 50px;
+		height: 50px;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
@@ -237,11 +238,18 @@
 	
 	#ch_right_slide {
 		all: unset;
-		font-size: 60px;
 		position: absolute;
+		width: 50px;
+		height: 50px;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
+	}
+	
+	#ch_left_slide > img,
+	#ch_right_slide > img {
+		max-width: 50px;
+		max-height: 50px;
 	}
 	
 	#ch_left_slide:hover,
@@ -256,10 +264,10 @@
 <div class="possibleMatch"></div>
 
 <div id="ch_left_wall">
-	<button value="0" id="ch_left_slide" onclick="leftSlideHandler()">🖜</button>
+	<button value="0" id="ch_left_slide" onclick="leftSlideHandler()"><img src="${cpath }/resources/image/왼쪽화살표.jpg"></button>
 </div>
 <div id="ch_right_wall">
-	<button value="1" id="ch_right_slide" onclick="rightSlideHandler()">🖝</button>
+	<button value="1" id="ch_right_slide" onclick="rightSlideHandler()"><img src="${cpath }/resources/image/오른쪽화살표.jpg"></button>
 </div>
 <section id="match_list_section">
    <div>
