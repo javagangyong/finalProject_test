@@ -94,4 +94,9 @@ public class MatchAjaxController {
 		return dto;
 	}
 	
+	@GetMapping("/currentMatching/{userid}")
+	public int currentMatching(@PathVariable("userid") String userid) {
+		return ms.getCurrentMatching(userid);
+	}
+	
 }

@@ -75,4 +75,8 @@ public class MatchService {
 	public int getWaitingMatchCount(String userid) {
 		return dao.getWaitingMatchCount(userid);
 	}
+
+	public int getCurrentMatching(String userid) {
+		return dao.getMatchingCount(userid);
+	}
 }

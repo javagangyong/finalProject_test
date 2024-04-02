@@ -90,7 +90,7 @@
 		border-radius: 15px;
 		width: 35%;
 		height: 0px;
-		z-index: 5;
+		z-index: 6;
 		transition-duration: 1.2s;
 		overflow-y: hidden;
 	}
@@ -118,8 +118,8 @@
 		width: 35%;
 		height: 0px;
 		background-color: white;
-		z-index: 4;
-		transition-duration: 1s;
+		z-index: 5;
+		transition-duration: 1.2s;
 	}
 	
 	.ch_height_toggle {

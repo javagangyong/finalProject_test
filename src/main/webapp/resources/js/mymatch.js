@@ -78,14 +78,28 @@ function denyHandler(event) {
 }
 
 // 매칭 수락 처리
-function acceptHandler(event) {
+async function acceptHandler(event) {
 	event.preventDefault()
+	
 	let target = event.target
 	while(target.tagName != 'A') {
 		target = target.parentNode
 	}
 	let oponent = target.getAttribute('value')
-	console.log(oponent)
+	
+	const url = cpath + '/matchAjax/currentMatching/' + oponent
+	const result = await fetch(url).then(resp => resp.json())
+	
+	if(result >= 5) {
+		swal.fire({
+	         title: '매칭불가',
+	         html: '상대방이 현재 최대 매칭가능 인원과 매칭중입니다. <br> 다음에 다시 시도해주세요',
+	         icon: 'info',
+	         confirmButtonText: '확인'
+	      })
+	    return
+	}
+	
 	stomp.send('/broker/' + oponent, {}, JSON.stringify({
 		from : username,
 		text : '매칭수락',
