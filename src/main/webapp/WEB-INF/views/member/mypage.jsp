@@ -15,7 +15,7 @@
 		position: fixed;
 		top: 100px;
 		left: 0;
-		width: 20%;
+		width: 15%;
 		height: 100%;
 		/*    background-color: lightgray; */
 		box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
@@ -53,7 +53,7 @@
 	div.content {
 		position: relative;
 		top: 150px;
-		left: -88%;
+		left: -100%;
 		justify-content: center;
 		align-items: center;
 	}

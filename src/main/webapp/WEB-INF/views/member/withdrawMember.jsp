@@ -15,10 +15,6 @@ section {
 	justify-content: center;
 }
 
-.center {
-	text-align: center;
-}
-
 #nocontent {
 	content: "";
 	width: 100px;
@@ -27,20 +23,6 @@ section {
 	position: absolute;
 	left: 50%;
 	margin-left: -50px;
-}
-
-
-ul#step {
-	padding: 0;
-	list-style: none;
-	display: flex;
-	justify-content: center;
-	text-align: center;
-}
-
-#arrow {
-	font-weight: bold;
-	margin: 15px 50px;
 }
 
 .withdrawMember_inner {
@@ -65,62 +47,9 @@ ul#step {
 	color: black;
 	font-size: 16px;
 }
+
 input::placeholder {
-    color: black;
-}
-
-label {
-	width: 248px;
-	height: 50px;
-	border: 1px solid lightgrey;
-	position: relative;
-}
-
-label:first-child {
-	margin-right: 5px;
-}
-
-input[type="radio"] {
-	all: unset;
-	display: inline-block;
-	position: absolute;
-	width: 250px;
-	height: 50px;
-}
-
-input[type="radio"]:checked+span {
-	background-color: #105dae;
-	color: white;
-}
-
-.radiotext {
-	position: absolute;
-	display: flex;
-	width: 250px;
-	height: 50px;
-	justify-content: center;
-	align-items: center;
-}
-
-#joinBtn {
-	margin-top: 20px;
-	width: 400px;
-	height: 50px;
-	border: 1px solid lightgrey;
-	background-color: #105dae;
-	font-size: 20px;
-	color: white;
-	text-align: center;
-	font-weight: bold;
-}
-
-button:hover {
-	cursor: pointer;
-}
-
-#joinBtn:disabled {
-	background-color: lightgrey;
-	cursor: not-allowed;
+    color: grey;
 }
 
 #check {
@@ -138,37 +67,24 @@ p {
 	margin: 0;
 	margin-top: 5px;
 }
-
-/* 	다빈수정(240308) */
-.mailSend>p>input, .mailAuth>p>input {
-	width: 350px;
+.wdmember {
+	margin-top: 20px;
+	width: 200px;
 	height: 50px;
-	border: 1px solid lightgrey;
-	position: relative;
-	color: black;
-	padding: 5px 10px;
-	font-size: 16px;
-}
-
-#mailBtn, #authBtn {
-	width: 130px;
-	border: 1px solid lightgrey;
-	background-color: #105dae;
-	color: white;
+	border: 2px solid pink;
+	border-radius: 10px;
+	background-color: white;
+	font-size: 20px;
+	color: pink;
 	text-align: center;
 	font-weight: bold;
 }
-
-.hidden {
-	display: none;
+.wdmember:hover {
+	cursor: pointer;
+	background-color: hotpink;
 }
 
-.birthday > select {
-	width: 165px;
-	height: 50px;
-	border: 1px solid lightgrey;
-	position: relative;
-}
+
 
 </style>
 
@@ -183,10 +99,10 @@ p {
 				<input class="inputframe" type="text" name="userid"
 					value="${dto.userid }" required readonly> <span id="check"></span>
 				<input class="inputframe" type="password" name="userpw"
-					placeholder="패스워드" required>
+					placeholder="비밀번호 입력" required>
 				<input class="inputframe" type="text" name="username"
 					value="${dto.username }" required>
-				<p class="inputframe"><input type="submit" value="회원탈퇴"></p>
+				<input class="wdmember" type="submit" value="회원탈퇴">
 			</form>
 		</div>
 	</div>
