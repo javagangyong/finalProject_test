@@ -120,11 +120,12 @@ div.tablePosition>h2 {
 }
 
 #reportImg {
-	background-size: auto 100%;
-	margin: auto;
-	display: block;
-	width: 400px;
-	height: 550px;
+	background-size: 85%;
+    margin: auto 0;
+    display: block;
+    width: 400px;
+    height: 400px;
+    background-repeat: no-repeat;
 }
 
 #open {
@@ -178,7 +179,7 @@ div.tablePosition>h2 {
 
 footer {
 	position: absolute !important;
-	bottom: -70% !important;
+	bottom: -100% !important;
 }
 
 </style>
