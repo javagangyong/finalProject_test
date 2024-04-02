@@ -214,7 +214,7 @@ p {
 					</label>
 				</div>
 				<div class="birthday">
-					<select class="birthYear_sel" title="출생년" name="birthYear" style="padding: 5px 10px;">
+					<select class="birthYear_sel" title="출생년" name="birthYear" style="padding: 5px 10px;" required>
 						<option value="">출생년</option>
 						<option value="2005">2005년</option>
 						<option value="2004">2004년</option>
@@ -278,7 +278,7 @@ p {
 						<option value="1946">1946년</option>
 						<option value="1945">1945년</option>
 						<option value="1944">1944년</option></select>
-					<select class="birthMonth_sel" title="월 선택" name="birthMonth" style="padding: 5px 10px;">
+					<select class="birthMonth_sel" title="월 선택" name="birthMonth" style="padding: 5px 10px;" required>
 						<option value="">월 선택</option>
 						<option value="01">1월</option>
 						<option value="02">2월</option>
@@ -292,7 +292,7 @@ p {
 						<option value="10">10월</option>
 						<option value="11">11월</option>
 						<option value="12">12월</option></select> 
-					<select class="birthDay_sel" title="일 선택" name="birthDay" style="padding: 5px 10px;">
+					<select class="birthDay_sel" title="일 선택" name="birthDay" style="padding: 5px 10px;" required>
 						<option value="">일 선택</option>
 						<option value="01">1일</option>
 						<option value="02">2일</option>
@@ -365,7 +365,9 @@ p {
 	mailBtn.onclick = emailSendHandler
 	authBtn.onclick = authNumberCheckHandler
 	
+	const joinBtn = document.getElementById('joinBtn')
 	joinBtn.addEventListener('click', (event) => {
+		const mailAuth = document.querySelector('.mailAuth')
 		const message = mailAuth.querySelector('p.mailMessage')
 		if(message.innerText != '인증 성공') {
 			event.preventDefault()
