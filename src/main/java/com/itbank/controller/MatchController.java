@@ -31,6 +31,13 @@ public class MatchController {
 	public ModelAndView matchMain(HttpSession session) {
 		ModelAndView mav = new ModelAndView("/match/match_main");
 		MemberDTO login = (MemberDTO) session.getAttribute("login");
+		int currMatch = ms.getCurrentMatching(login.getUserid());
+		if(currMatch >= 5) {
+			mav.addObject("msg", "현재 최대 매칭 가능 인원과 매칭중입니다.");
+			mav.addObject("url", "/");
+			mav.setViewName("alert");
+			return mav;
+		}
 		MemberDTO dto = ms.getMyInfo(login.getUserid());
 		mav.addObject("dto", dto);
 		return mav;
@@ -49,7 +56,6 @@ public class MatchController {
 		ModelAndView mav = new ModelAndView();
 
 		MemberDTO login = (MemberDTO) session.getAttribute("login");
-
 		List<MatchDTO> list = ms.selectMatches(login.getUserid());
 		mav.addObject("list", list);
 
