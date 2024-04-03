@@ -143,7 +143,7 @@ div.tablePosition>h2 {
  }
  #reportListTitle{
  	position: absolute;
- 	top: -125%;
+ 	top: -45px;
     left: 41%;
  	
  }
