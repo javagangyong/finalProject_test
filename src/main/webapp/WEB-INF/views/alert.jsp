@@ -4,6 +4,11 @@
 
 <script>
 	const msg = '${msg}'
+	const url = '${url}'
+	if(url != '') {
+		alert(msg)
+		location.href = cpath + url
+	}
 	if(msg == '가입완료') {
 		const flag = confirm('가입되었습니다. 내 정보 입력 페이지로 이동할까요?')
 		if(flag) {

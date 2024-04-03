@@ -54,6 +54,9 @@
 		text-align: center;
 		background-color: black;
 		border-radius: 5px;
+		color: white;
+		font-weight: bold;
+		font-size: 13px;
 	}
 	
 	.ch_match_btns button:hover {
@@ -222,8 +225,8 @@
 						${match.matched == 0 ? '매칭 대기' : (match.matched == 1 ? '매칭중' : (match.matched == 2 ? '매칭거부' : '매칭종료')) }
 					</span>
 					<span class="ch_match_btns ${match.matched != 0 or match.reqUser == login.userid ? 'hidden' : '' }">
-						<a value="${match.reqUser }" href="${cpath }/match/accept?reqUser=${match.reqUser}"><button class="accept" onclick="acceptHandler(event)">수락</button></a>
-						<a value="${match.reqUser }" href="${cpath }/match/deny?reqUser=${match.reqUser}"><button class="deny" onclick="denyHandler(event)">거절</button></a>
+						<button value="${match.reqUser }" class="accept" onclick="acceptHandler(event)">수락</button>
+						<button value="${match.reqUser }" class="deny" onclick="denyHandler(event)">거절</button>
 					</span>
 				</li>
 			</ul>

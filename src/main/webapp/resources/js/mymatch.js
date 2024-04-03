@@ -63,29 +63,17 @@ function showMatchSuccess() {
 
 // 매칭 거절 처리
 function denyHandler(event) {
-	event.preventDefault()
-	let target = event.target
-	while(target.tagName != 'A') {
-		target = target.parentNode
-	}
-	let oponent = target.getAttribute('value')
-	console.log(oponent)
+	let oponent = event.target.getAttribute('value')
 	stomp.send('/broker/' + oponent, {}, JSON.stringify({
 		from : username,
 		text : '매칭거부',
 	}))
-	location.href = target.href
+	location.href = cpath + '/match/deny?reqUser=' + oponent
 }
 
 // 매칭 수락 처리
 async function acceptHandler(event) {
-	event.preventDefault()
-	
-	let target = event.target
-	while(target.tagName != 'A') {
-		target = target.parentNode
-	}
-	let oponent = target.getAttribute('value')
+	let oponent = event.target.getAttribute('value')
 	
 	const url = cpath + '/matchAjax/currentMatching/' + oponent
 	const result = await fetch(url).then(resp => resp.json())
@@ -104,7 +92,8 @@ async function acceptHandler(event) {
 		from : username,
 		text : '매칭수락',
 	}))
-	location.href = target.href
+	
+	location.href = cpath + '/match/accept?reqUser=' + oponent
 }
 
 // 남은 매칭 횟수 확인

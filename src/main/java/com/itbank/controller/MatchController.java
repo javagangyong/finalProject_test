@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.itbank.exception.CannotMatchException;
 import com.itbank.model.MatchDTO;
 import com.itbank.model.MemberDTO;
 import com.itbank.service.ChatService;
@@ -63,7 +64,12 @@ public class MatchController {
 	}
 
 	@GetMapping("/accept")
-	public String accept(String reqUser, HttpSession session, RedirectAttributes rttr) {
+	public String accept(String reqUser, HttpSession session, RedirectAttributes rttr) throws CannotMatchException {
+		int curr = ms.getCurrentMatching(reqUser);
+		if(curr >= 5) {
+			throw new CannotMatchException("매칭 불가! 잘못된 접근입니다");
+		}
+		
 		MemberDTO login = (MemberDTO) session.getAttribute("login");
 		String respUser = login.getUserid();
 		int row = ms.consentUpdate(reqUser, respUser);
