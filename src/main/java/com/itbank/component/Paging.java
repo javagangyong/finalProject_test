@@ -28,7 +28,9 @@ public class Paging {
 		fetch = perPage;
 		pageCount = boardCount / perPage;
 		pageCount += (boardCount % perPage != 0) ? 1 : 0;
+		// 자투리 게시물 남으면 pageCount + 1
 		section = (page - 1) / 6;
+		// 0번 섹션: 1~6페이지	// 1번 섹션: 7~12페이지	// 2번 섹션: 13~18페이지
 		begin = section * 6 + 1;
 		end = begin + 5;
 		prev = section != 0;

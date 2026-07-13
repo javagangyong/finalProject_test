@@ -745,7 +745,7 @@ h1, h2 {
 	border-radius: 15px;
 	width: 35%;
 	height: 0px;
-	z-index: 5;
+	z-index: 6;
 	transition-duration: 1.2s;
 	overflow-y: hidden;
 }
@@ -773,7 +773,7 @@ h1, h2 {
 	width: 35%;
 	height: 0px;
 	background-color: white;
-	z-index: 4;
+	z-index: 5;
 	transition-duration: 1s;
 }
 
@@ -842,6 +842,80 @@ h1, h2 {
 	cursor: pointer;
 	transition-duration: 1s;
 }
+
+
+
+
+
+
+
+
+
+
+	/* 테스트 매칭 스타일*/
+	#userInfo {
+		position: fixed;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -47%);
+		width: 400px;
+		height: 700px;
+		background-color: #fafafa;
+		border: 1px solid #e9ecef;
+		z-index: 7;
+		display: none;
+		overflow: hidden;
+	}
+	#userProfile {
+		width: 280px;
+		height: 300px;
+		margin: 30px auto;
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+	#userCon {
+		width: 280px;
+		height: 315px;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-content: center;
+	}
+	.heightToggle {
+		display: block !important;
+	}
+	#overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 6;
+		background-color: rgba(0, 0, 0, 0.3);
+	}
+	#userCon > p {
+		margin-top: 3px;
+		margin-bottom: 3px;
+	}
+	#userCon > pre {
+		white-space: pre-wrap;
+	}
+	.userConBtn {
+		width: 140px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin: 0 auto;
+	}
+	#testConsent:hover, 
+	#testRefuse:hover, 
+	#testDefer:hover {
+		cursor: pointer;
+		transform: translateY(-3px);
+		transition: transform 0.2s ease;
+	}
 </style>
 </head>
 <body>
@@ -911,9 +985,10 @@ h1, h2 {
 				<ul>
 					<li class="link" id="marrigeReviewLink" category="marrige"><a
 						href="${cpath }/review/list/1">성혼커플 인터뷰</a></li>
-
-					<!-- 					<li>테스트</li> -->
-					<!-- 					<li>테스트</li> -->
+					<li class="link" id="freeBoardLink"><a 
+						href="${cpath }/freeBoard/fbList/1">자유게시판</a></li>
+					<li class="link">
+						<a href="${cpath }/testMatch/testMatch_main">테스트 매칭</a></li>
 					<!-- 					<li>테스트</li> -->
 					<!-- 					<li>테스트</li> -->
 					<!-- 					<li>테스트</li> -->
@@ -970,6 +1045,10 @@ h1, h2 {
 
 	<div id="ch_profile_overlay"></div>
 	<div id="reqUseroverlay" class="hidden"></div>
+	
+<!-- 테스트 매칭 div -->
+	<div id="userInfo"></div>
+	<div id="overlay" class="hidden"></div>
 
 	<script>
 		// 로그인 중인 유저 확인
@@ -979,13 +1058,148 @@ h1, h2 {
 
 		
 		var cpath = '${cpath}'
-		const sockJS = new SockJS(cpath + '/endpoint') // WebSocket 엔드포인트 설정
-		const stomp = Stomp.over(sockJS)
-
+		const sockJS = new SockJS(cpath + '/endpoint')	// SockJS로 서버의 대문(Endpoint)에 접근
+		const stomp = Stomp.over(sockJS)				// SockJS 통로 위에 STOMP 전화선을 깔기
+		
+// 		if (user != '') {
+// 			stomp.connect({}, chatListLoadHandler)
+// 			document.addEventListener('DOMContentLoaded', ChUserProfileImgHandler)
+// 		}
+		
+// 		임의로 만든 구독 + 알람보내기
 		if (user != '') {
-			stomp.connect({}, chatListLoadHandler)
-			document.addEventListener('DOMContentLoaded', ChUserProfileImgHandler)
+			stomp.connect({}, () => {
+				stomp.subscribe('/broker/' + user, matchingHandler)
+			})
 		}
+		
+		async function matchingHandler(message) {
+			const content = JSON.parse(message.body);
+			const fromUser = content.from;
+			const toUser = content.to;
+			const text = content.text;
+			
+			if(text.includes('수락')) {
+				alert(toUser + text);
+				return;
+			} else if(text.includes('거부')) {
+				alert(toUser + text);
+				return;
+			}
+			
+			const url = cpath + '/testMatchAjax/userInfo/' + fromUser;
+			const info = await fetch(url).then(resp => resp.json());
+			
+			const date = new Date()
+			const age = date.getFullYear() - info.birthYear + 1
+			
+			let tag = '';
+			tag += '<div id="userProfile" style="background-image: url(\'' + cpath + '/upload/' + info.profile + '\')"></div>'
+			tag += '<div id="userCon">'
+			tag += '	<p>' + info.username + '(' + age + '세)</p>'
+			tag += '	<p>' + info.birthYear + '년 ' + info.birthMonth + '월 ' + info.birthDay + '일생</p>'
+			tag += '	<p>결혼여부 : ' + (info.marriedCount == 0 ? '없음' : (info.marriedCount == 1 ? '1회' : '2회이상')) + '</p>'
+			tag += '	<p>거주지역 : ' + info.residence + '</p>'
+			tag += '	<p>직업 : ' + info.job + '</p>'
+			tag += '	<p>연봉 : ' + info.salary + '</p>'
+			tag += '	<p>종교 : ' + info.religion + '</p>'
+			tag += '	<p style="font-size: 20px; margin: 3px auto;">자기소개</p>'
+			tag += '	<pre>' + info.introduce + '</pre>'
+			tag += '	<div class="userConBtn">'
+			tag += '		<div id="testDefer">보류</div>'
+			tag += '		<div id="testRefuse">거절</div>'
+			tag += '		<div id="testConsent">수락</div>'
+			tag += '	</div>'
+			tag += '</div>'
+			
+			const userInfo = document.getElementById('userInfo');
+			userInfo.innerHTML = tag;
+			
+			testInfoToggle()
+			const overlay = document.getElementById('overlay')
+			overlay.onclick = testInfoToggle
+			
+			const testConsent = document.getElementById('testConsent');
+			const testRefuse = document.getElementById('testRefuse');
+			const testDefer = document.getElementById('testDefer');
+			
+			
+			//수락버튼 눌렸을 시
+			testConsent.onclick = async function() {
+				const testConsentUrl = cpath + '/testMatchAjax/testConsent';
+				const ob = {respUser: toUser,
+							reqUser: fromUser}
+				const opt = {
+						method: 'POST',
+						body: JSON.stringify(ob),
+						headers: {
+							'Content-Type' : 'application/json;charset=utf-8'
+						}
+				}
+				const testConsentRow = await fetch(testConsentUrl, opt).then(resp => resp.text());
+				
+				// 상대방에게 수락했다는 알림보내기
+				if(testConsentRow === '1') {
+					testInfoToggle();
+					stomp.send('/broker/' + fromUser, {}, JSON.stringify({
+						to: username,
+						text: '님이 매칭을 수락하셨습니다!'
+					}))
+					setTimeout(() => {
+						alert('채팅을 확인해주세요')
+					}, 100);
+				}
+				
+			}
+			
+			// 거부버튼 눌렀을 시
+			testRefuse.onclick = async function() {
+				const testRefuseUrl = cpath + '/testMatchAjax/testRefuse'
+				const ob = {
+						reqUser: fromUser,
+						respUser: toUser
+				}
+				const opt = {
+						method: 'POST',
+						body: JSON.stringify(ob),
+						headers: {
+							'Content-Type' : 'application/json;charset=utf-8'
+						}
+				}
+				const testRefuseRow = await fetch(testRefuseUrl, opt).then(resp => resp.text());
+				
+				//상대에게 거부 알람 보내기
+				if (testRefuseRow === '1'){
+					testInfoToggle();
+					stomp.send('/broker/' + fromUser, {}, JSON.stringify({
+						to: username,
+						text: '님이 매칭을 거부하셨습니다 ㅜ'
+					}))
+					
+				}
+			}
+			
+			
+			// 보류버튼 눌렀을 시
+			testDefer.onclick = async function() {
+				testInfoToggle()
+				alert('매칭을 보류했어요 마이매칭을 확인해주세용')
+			}
+			
+			
+		}
+		
+		function testInfoToggle() {
+			const userInfo = document.getElementById('userInfo')
+			const overlay = document.getElementById('overlay')
+			userInfo.classList.toggle('heightToggle')
+			overlay.classList.toggle('hidden')
+		}
+		
+		
+		
+// 		여기까지
+
 		
 		async function ChUserProfileImgHandler() {
 			const url = cpath + '/member/spec?userid=' + user

@@ -56,6 +56,8 @@
          <mapping path="/member/mypage"/>
          <mapping path="/report/**"/>
          <mapping path="/match/**"/>
+         <mapping path="/testMatch/**"/>
+         <mapping path="/freeBoard/fbWrite"/>
          <mapping path="/membership/myMembership/"/>
          <mapping path="/membership/purchase"/>
          <exclude-mapping path="/membership/introduce"/>
@@ -68,6 +70,7 @@
       <interceptor>
          <mapping path="/membership/myMembership/"/>
          <mapping path="/match/**"/>
+         <mapping path="/testMatch/**"/>
          <exclude-mapping path="/match/mymatch"/>
          <beans:bean class="com.itbank.interceptor.MembershipInterceptor" />
       </interceptor>

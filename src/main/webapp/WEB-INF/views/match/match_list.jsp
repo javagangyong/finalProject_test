@@ -209,7 +209,7 @@
 	#ch_left_wall {
 		position: absolute;
     	width: 284px;
-    	height: 100%;
+    	height: 120%;
     	background-color: white;
     	top: 0;
     	left: 0;
@@ -219,7 +219,7 @@
 	#ch_right_wall {
 		position: absolute;
     	width: 263px;
-    	height: 100%;
+    	height: 120%;
     	background-color: white;
     	top: 0;
     	right: 0;

@@ -162,21 +162,21 @@ footer {
 		<button id="reviewBtn">목록보기</button>
 		
 		<div id="reviewReplyWriteForm">
-		<div class="reviewReply">
-		    <div class="reviewReplyWrite ${empty login ? 'hidden' : ''}">
-		    	<form id="reviewReplyForm">
-		    		<div style="display: flex; justify-content: space-between; width: 170px; margin: 5px;">
-		    			<div>🧑🏻 ${login.userid }</div>
-		    			<div><button id="reviewReplyBtn" type="submit">댓글 작성</button></div>
-		    		</div>
-		    		<textarea name="content" required></textarea>
-		    		<input type="hidden" name="board_idx" value="${dto.idx }">
-		    		<input type="hidden" name="writer" value="${login.userid }">
-		    		
-		    	</form>
-		    </div>
-		</div>
-		<div id="reviewReplyListForm"></div>
+			<div class="reviewReply">
+			    <div class="reviewReplyWrite ${empty login ? 'hidden' : ''}">
+			    	<form id="reviewReplyForm">
+			    		<div style="display: flex; justify-content: space-between; width: 170px; margin: 5px;">
+			    			<div>🧑🏻 ${login.userid }</div>
+			    			<div><button id="reviewReplyBtn" type="submit">댓글 작성</button></div>
+			    		</div>
+			    		<textarea name="content" required></textarea>
+			    		<input type="hidden" name="board_idx" value="${dto.idx }">
+			    		<input type="hidden" name="writer" value="${login.userid }">
+			    		
+			    	</form>
+			    </div>
+			</div>
+			<div id="reviewReplyListForm"></div>
 		</div>
 		
 		<div id="reviewRecommend">
@@ -253,11 +253,13 @@ footer {
 	form.onsubmit = async function(event){
 		event.preventDefault()
 		const url = '${cpath}/reviewAjax/write'
-		const formData = new FormData(event.target)
+		const formData = new FormData(event.target) // event.target = form
 		const ob = {}
 		for(let key of formData.entries()){
 			ob[key[0]] = key[1]
-		}
+		}	// formData.entries는 ['name', 'user1'], ['content', 'ㅋㅋ']와 같은 배열 덩어리 반환
+		// 배열 덩어리가 객체가 될수 없기 때문에
+		// for문으로 ob[name] = 'user1' 식으로 객체에 담는다
 		console.log(ob)
 		const opt = {
 			 method: 'POST',

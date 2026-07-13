@@ -67,8 +67,7 @@ public class StompController {
 	@MessageMapping("/tryMatch/{respUser}")
 	@SendTo("/broker/{respUser}")
 	public MessageDTO tryMatch(MessageDTO dto) {
-//	      System.out.println("respUser는" + dto.getTo() + " reqUser는 " + dto.getFrom());
-		dto.setText(dto.getTime() + "님의 대화 요청이 있습니다!");
+		dto.setText(dto.getTime() + "님의 대화요청이 있습니다!");
 		return dto;
 	}
 
