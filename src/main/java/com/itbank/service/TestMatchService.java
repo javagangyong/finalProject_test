@@ -28,6 +28,8 @@ public class TestMatchService {
 	}
 
 	public int updateConsent(MatchDTO dto) {
+		int membershipCountRow = dao.updateMembership(dto);
+		System.out.println(membershipCountRow == 2 ? "멤버쉽 카운트 1차감" : "멤버쉽 카운트 차감 실패");
 		return dao.updateConsent(dto);
 	}
 

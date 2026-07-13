@@ -43,5 +43,9 @@ public interface TestMatchDAO {
 			+ "and matched = 0")
 	int updateRefuse(MatchDTO dto);
 
+	@Update("update membership set matchCount = matchCount - 1 "
+			+ "where userid IN(#{reqUser}, #{respUser})")
+	int updateMembership(MatchDTO dto);
+
 
 }
