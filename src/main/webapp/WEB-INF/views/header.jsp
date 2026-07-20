@@ -989,7 +989,7 @@ h1, h2 {
 						href="${cpath }/freeBoard/fbList/1">자유게시판</a></li>
 					<li class="link">
 						<a href="${cpath }/testMatch/testMatch_main">테스트 매칭</a></li>
-					<!-- 					<li>테스트</li> -->
+					<li class="link"><a href="${cpath }/testMember/testMypage">테스트 마이페이지</a></li>
 					<!-- 					<li>테스트</li> -->
 					<!-- 					<li>테스트</li> -->
 				</ul>

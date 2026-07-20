@@ -67,12 +67,12 @@ public class MemberController {
 		}
 		int row = ms.updateLastLogin(login.getUserid());
 
-		java.util.Date utilDate = new java.util.Date();
-
-		// java.util.Date를 java.sql.Date로 변환
-		java.sql.Date today = new java.sql.Date(utilDate.getTime());
-
-		login.setLastLoginDate(today);
+//		java.util.Date utilDate = new java.util.Date();
+//
+//		// java.util.Date를 java.sql.Date로 변환
+//		java.sql.Date today = new java.sql.Date(utilDate.getTime());
+//
+//		login.setLastLoginDate(today);
 
 		if (save != null) {
 			Cookie cookie = new Cookie("save", dto.getUserid());

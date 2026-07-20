@@ -304,7 +304,7 @@ const myInfoLoadHandler = function(event) {
 // 생년월일 selected
 const selectHandler = function() {
     
-     
+	// 클래스 이름이 여러개일수 있어서 배열로 가져오는데 그중 첫번째([0])의 옵션들    
     var birthYearOptions = document.getElementsByClassName("birthYear_sel")[0].options;
     var birthMonthOptions = document.getElementsByClassName("birthMonth_sel")[0].options;
     var birthDayOptions = document.getElementsByClassName("birthDay_sel")[0].options;
