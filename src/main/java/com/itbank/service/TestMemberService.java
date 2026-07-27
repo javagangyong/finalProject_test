@@ -3,6 +3,7 @@ package com.itbank.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.itbank.component.HashComponent;
 import com.itbank.model.MemberDTO;
 import com.itbank.model.ProfileDTO;
 import com.itbank.repository.TestMemberDAO;
@@ -11,6 +12,7 @@ import com.itbank.repository.TestMemberDAO;
 public class TestMemberService {
 	
 	@Autowired TestMemberDAO dao;
+	@Autowired HashComponent hash;
 
 	public ProfileDTO getMyProfile(String userid) {
 		return dao.selectProfile(userid);
@@ -21,6 +23,8 @@ public class TestMemberService {
 	}
 
 	public int updatePw(MemberDTO dto) {
+		String hashPass = hash.getHash(dto.getUserpw());
+		dto.setUserpw(hashPass);
 		return dao.updatePw(dto);
 	}
 

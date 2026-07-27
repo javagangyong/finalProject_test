@@ -17,35 +17,7 @@ public interface TestMemberDAO {
 			+ "where userid = #{userid}")
 	int updateInfo(MemberDTO dto);
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@Update("update member set user")
+	@Update("update member set userpw = #{userpw} where userid = #{userid}")
 	int updatePw(MemberDTO dto);
 
 }

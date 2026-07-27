@@ -20,20 +20,20 @@
 		height: 100%;
 	}
 	.bar {
-		flex: 1;
-		border: 1px solid black;
+		width: 250px;
+		background-color: #EFEBE6;
 	}
 	.mainContent {
-		flex: 5;
-		border: 1px solid black;
+/* 		flex: 5; */
 	}
 	div.asideTitle {
 		font-weight: bold;
 		font-size: 20px;
 		text-align: center;
+		margin-top: 50px;
 	}
 	div.item {
-		margin-top: 13px;
+		margin-top: 20px;
 		display: flex;
 		justify-content: center;
 	}
@@ -349,8 +349,8 @@
 			tag += '</div>';
 			mainContent.innerHTML = tag;
 			
-			// 비밀번호 특정조건 만족
 			const pwSubmitBtn = document.getElementById('changePwForm').querySelector('#pw-submit-btn');
+			// 비밀번호 특정조건 만족
 			function CheckPwHandler(event) {
 				const password = event.target.value;
 				const regex = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{8,15}$/;
@@ -399,22 +399,32 @@
 			pwInput2.addEventListener('keyup', ConfirmPwHandler);
 			
 			
-			pwSubmitBtn.addEventListener('submit', async (e) => {
+			// 비밀번호 변경 확인 버튼
+			const pwSubmitForm = document.getElementById('changePwForm');
+			pwSubmitForm.addEventListener('submit', async (e) => {
+				e.preventDefault();
+				
 				const url = cpath + '/testMemberAjax/pwModify';
 				const ob = {
-						userpw = e.target.qeurySelector('input[name="userpw"]').value,
-						userid = e.target.qeurySelector('input[name="userid"]').value
-						}
+						userpw: e.target.querySelector('input[name="userpw"]').value,
+						userid: e.target.querySelector('input[name="userid"]').value
+				}
 				const opt = {
-						method = 'POST',
-						body = JSON.stringify(ob),
-						headers = {
+						method : 'POST',
+						body : JSON.stringify(ob),
+						headers : {
 							'Content-Type' : 'application/json;charset=utf-8'
 						}
 				}
 				const message = await fetch(url, opt).then(resp => resp.text());
 				alert(message);
 				location.href = cpath + '/member/logout?mypage=1';
+			})
+			
+			// 취소버튼
+			const pwCancleBtn = document.getElementById('changePwForm').querySelector('#pw-cancle-btn');
+			pwCancleBtn.addEventListener('click', () => {
+				history.back();
 			})
 			
 			
