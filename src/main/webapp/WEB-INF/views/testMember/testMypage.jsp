@@ -435,7 +435,7 @@
 	})
 	
 	// 마이페이지 들어왔을때 마이프로필이 뜨도록
-	infoUpdate.dispatchEvent(new Event('click'));
+	myProfile.dispatchEvent(new Event('click'));
 	
 	
 	

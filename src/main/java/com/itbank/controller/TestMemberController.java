@@ -10,5 +10,8 @@ public class TestMemberController {
 	
 	@GetMapping("/testMypage")
 	public void testMypage() {}
+	
+	@GetMapping("/testJoin")
+	public void testJoin() {}
 
 }

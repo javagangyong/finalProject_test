@@ -976,7 +976,7 @@ h1, h2 {
 				<ul>
 					<li class="link" id="reportLink" category="inquiry"><a
 						href="${cpath }/report/myreport">회원신고</a></li>
-					<!-- 					<li>테스트</li> -->
+					<li class="link"><a href="${cpath }/testMember/testJoin">테스트 메일보내기</a></li>
 					<!-- 					<li>테스트</li> -->
 					<!-- 					<li>테스트</li> -->
 					<!-- 					<li>테스트</li> -->
