@@ -51,16 +51,19 @@ public class MailComponent {
 	
 	public int sendMimeMessage(HashMap<String, String> param) {
 		// 2단계: 로그인 및 통신 연결하기(Session 생성)
-		//통신세션, 구글 우체국과 연결통로
+		// 통신세션, 구글 우체국과 연결통로
 		Session mailSession = Session.getDefaultInstance(props, new Authenticator() {
+			// Authenticator은 아이디,비밀번호를 미리 쥐고있는 '인증대리인'
 			String un = serverId;
 			String pw = serverPw;
 			
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
+				// 서버에 아이디 비밀번호 제출
 				return new PasswordAuthentication(un, pw);
 			}
 		});
+		// 통신하는 모든과정을 콘솔창에 보여준다(true)
 		mailSession.setDebug(true);
 		
 		
