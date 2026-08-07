@@ -1055,23 +1055,71 @@ h1, h2 {
 		var user = '${login.userid}'
 		var username = '${login.username}'
 		var gender = '${login.gender}'
-
-		
 		var cpath = '${cpath}'
-		const sockJS = new SockJS(cpath + '/endpoint')	// SockJS로 서버의 대문(Endpoint)에 접근
-		const stomp = Stomp.over(sockJS)				// SockJS 통로 위에 STOMP 전화선을 깔기
 		
+//		기존 stomp연결 로직		
 // 		if (user != '') {
 // 			stomp.connect({}, chatListLoadHandler)
 // 			document.addEventListener('DOMContentLoaded', ChUserProfileImgHandler)
 // 		}
 		
-// 		임의로 만든 구독 + 알람보내기
-		if (user != '') {
+		
+		
+//		네트워크 불안정, 서버 재시작 시 stomp 재연결 로직
+		let stomp = null;
+		let isConnected = false;
+		let reconnectInterval = null;
+		
+		function connectStomp() {
+			const sockJS = new SockJS(cpath + '/endpoint')	// SockJS로 서버의 대문(Endpoint)에 접근
+			stomp = Stomp.over(sockJS)				// SockJS 통로 위에 STOMP 전화선을 깔기
+			
+//			heartbeat 설정 (서버와 10초마다 신호 주고받기)
+			stomp.heartbeat.outgoing = 10000;	// 클라이언트 -> 서버 (10초)
+			stomp.heartbeat.incoming = 10000;	// 서버 -> 클라이언트 (10초)
+			
+//			연결 시도
+			if (user !== '') {
+				stomp.connect({}, () => {		// SUCCESS 콜백: 연결 성공 시
+					console.log('STOMP 연결 성공!');
+					isConnected = true;
+					
+					// 재연결 시도 타이머가 돌아가고 있었다면 종료
+					if(reconnectInterval) {
+						clearInterval(reconnectInterval);
+						reconnectInterval = null;
+					}
+					
+					// 구독 + 알람보내기
+					stomp.subscribe('/broker/' + user, matchingHandler);
+				}, 
+				// ERROR 콜백: 연결이 끊기거나 에러 발생 시 자동 실행
+				(error) => {
+					console.error('STOMP 연결 끊김/에러 발생:', error);
+					isConnected = false;
+					
+					// 이미 재연결 시도 중이 아니라면 재연결 타이머 시작
+					if (!reconnectInterval) {
+						console.log('5초 후 재연결을 시도합니다...');
+						reconnectInterval = setInterval(() => {
+							console.log('STOMP 재연결 시도 중...');
+							connectStomp();
+						}, 5000);	// 5초마다 재연결 시도
+					}
+				})
+			}
+		}
+		// 최초 실행
+		connectStomp();
+		
+		
+		
+// 		이전 기본 구독
+/* 		if (user != '') {
 			stomp.connect({}, () => {
 				stomp.subscribe('/broker/' + user, matchingHandler)
 			})
-		}
+		} */
 		
 		async function matchingHandler(message) {
 			const content = JSON.parse(message.body);

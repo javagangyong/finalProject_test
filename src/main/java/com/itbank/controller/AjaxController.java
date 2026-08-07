@@ -43,7 +43,7 @@ public class AjaxController {
 		String authNumber = String.format("%06d", num);
 
 		session.setAttribute("authNumber", authNumber);
-		session.setMaxInactiveInterval(300);
+		session.setMaxInactiveInterval(300); 
 
 		param.put("subject", "[듀세요] 회원가입 인증번호");
 		param.put("content", authNumber);
